@@ -445,7 +445,7 @@ body{font-family:'DM Sans',sans-serif;background:#f8f7fc;color:#1a1a1a;min-heigh
   <div class="header-inner">
     <div class="header-brand">
       <div class="header-logo">
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><polygon points="10,10 90,50 10,90" fill="white"/></svg>
+        <span style="font-size:38px;font-weight:300;line-height:1;color:white;">&gt;</span>
       </div>
       <div>
         <div class="header-title">Life Sciences Library</div>
@@ -589,10 +589,6 @@ body{font-family:'DM Sans',sans-serif;background:#f8f7fc;color:#1a1a1a;min-heigh
             <label class="form-label">Floor / location info</label>
             <input class="form-input" id="setting-location" value="Accenture · Floor Library">
           </div>
-          <div class="form-group">
-            <label class="form-label">Change admin PIN</label>
-            <input class="form-input" id="setting-pin" placeholder="Enter new 4-digit PIN" maxlength="4" style="max-width:200px">
-          </div>
 
           <button class="btn-primary" onclick="saveSettings()">Save settings</button>
           <button class="btn-secondary" onclick="lockAdmin()" style="color:var(--red);border-color:var(--red);margin-top:10px">Lock admin panel</button>
@@ -734,7 +730,8 @@ function apiPost(body){
 let books            = [];
 let loans            = [];
 let history          = [];
-let settings         = { libname:'Life Sciences Library', location:'Accenture · Floor Library', adminPin:'1234' };
+const ADMIN_PIN      = '1234';
+let settings         = { libname:'Life Sciences Library', location:'Accenture · Floor Library' };
 let adminUnlocked    = false;
 let selectedBookId   = null;
 let selectedDays     = 14;
@@ -758,7 +755,6 @@ function lsSave(key,val){ try{ localStorage.setItem(key,JSON.stringify(val)); }c
 // ── Initialise — load everything from Google Sheets ────
 async function init(){
   showLoadingState(true);
-  sentLog = lsLoad(K_SENT, {});
   try {
     const data = await apiGet({ action:'getAll' });
     books    = (data.books   ||[]).map(normaliseBook);
@@ -771,10 +767,10 @@ async function init(){
     showToast('Could not reach database — check connection','error');
   }
   applySettings();
+  showLoadingState(false);
   renderBooks();
   updateHeaderBadge();
   checkOverdueBadge();
-  showLoadingState(false);
 }
 
 function normaliseBook(b){
@@ -1067,7 +1063,7 @@ async function returnBook(loanId, query){
 // ── Admin Panel ────────────────────────────────────────
 function unlockAdmin(){
   const pin = document.getElementById('admin-pin').value;
-  if(pin===settings.adminPin){
+  if(pin===ADMIN_PIN){
     adminUnlocked=true;
     document.getElementById('admin-locked').style.display='none';
     document.getElementById('admin-panel').style.display='block';
@@ -1199,8 +1195,6 @@ async function deleteBook(bookId){
 async function saveSettings(){
   settings.libname  = document.getElementById('setting-libname').value.trim()  || settings.libname;
   settings.location = document.getElementById('setting-location').value.trim() || settings.location;
-  const newPin = document.getElementById('setting-pin').value.trim();
-  if(newPin){ if(newPin.length===4&&/^\d+$/.test(newPin)){ settings.adminPin=newPin; } else { showToast('PIN must be exactly 4 digits','error'); return; } }
   try {
     await apiPost({ action:'saveSettings', data:settings });
     applySettings();

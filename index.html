@@ -1013,13 +1013,12 @@ async function lookupLoans(){
     updateHeaderBadge(); checkOverdueBadge(); renderBooks();
   } catch(e){}
   // Prefer exact email match, then partial email, then partial name
+  const q = raw.toLowerCase();
   let myLoans;
   if(raw.includes('@')){
-    const q = raw.toLowerCase();
     myLoans = loans.filter(l=>l.email.toLowerCase()===q);
     if(!myLoans.length) myLoans = loans.filter(l=>l.email.toLowerCase().includes(q));
   } else {
-    const q = raw.toLowerCase();
     myLoans = loans.filter(l=>l.borrower.toLowerCase().includes(q));
   }
   if(!myLoans.length){

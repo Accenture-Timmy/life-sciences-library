@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<meta name="theme-color" content="#0f2342">
+<meta name="theme-color" content="#6c1686">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Life Sciences Library · Accenture</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
 /* ── Reset & Base ─────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -17,7 +18,7 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
 
 /* ── CSS Variables ────────────────────────────────────── */
 :root{
-  --navy:#0f2342;
+  --navy:#6c1686;
   --navy-light:#1a3a6b;
   --gold:#b8963e;
   --gold-light:#f0e6cc;
@@ -570,7 +571,34 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
             <label class="form-label">Change admin PIN</label>
             <input class="form-input" id="setting-pin" placeholder="Enter new 4-digit PIN" maxlength="4" style="max-width:200px">
           </div>
-          <button class="btn-primary" onclick="saveSettings()">Save settings</button>
+
+          <hr style="border:none;border-top:1px solid var(--cream-dark);margin:18px 0 16px">
+          <p style="font-size:14px;font-weight:500;margin-bottom:3px;color:var(--text)">📧 Email notifications</p>
+          <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px">Paste your EmailJS credentials here to activate automatic emails. Sent on checkout, at 3 days before due, on the due date, and daily when overdue.</p>
+          <div class="form-group">
+            <label class="form-label">EmailJS Public Key</label>
+            <input class="form-input" id="setting-ejs-pubkey" placeholder="e.g. aBcDeFgH1234567">
+          </div>
+          <div class="form-group">
+            <label class="form-label">EmailJS Service ID</label>
+            <input class="form-input" id="setting-ejs-service" placeholder="e.g. service_abc1234">
+          </div>
+          <div class="form-group">
+            <label class="form-label">EmailJS Template ID</label>
+            <input class="form-input" id="setting-ejs-template" placeholder="e.g. template_abc1234">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Your email address (admin 1 — Timmy)</label>
+            <input class="form-input" id="setting-admin1" placeholder="timmy@accenture.com" type="email">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Shane's email address (admin 2)</label>
+            <input class="form-input" id="setting-admin2" placeholder="shane@accenture.com" type="email">
+          </div>
+          <div id="email-config-status" style="display:none;font-size:13px;padding:10px 14px;border-radius:8px;margin-bottom:12px"></div>
+
+          <button class="btn-primary" onclick="saveSettings()">Save all settings</button>
+          <button class="btn-secondary" onclick="testEmail()" style="margin-top:10px">Send test email to my address</button>
           <button class="btn-secondary" onclick="lockAdmin()" style="color:var(--red);border-color:var(--red);margin-top:10px">Lock admin panel</button>
           <hr style="border:none;border-top:1px solid var(--cream-dark);margin:16px 0">
           <p style="font-size:13px;color:var(--text-muted);margin-bottom:10px">Danger zone</p>
@@ -607,9 +635,8 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
     </div>
     <div class="info-card">
       <h3>Library contacts</h3>
-      <div class="info-row"><span class="info-icon">👤</span><span><strong>Shane</strong> — Life Sciences practice, library curator</span></div>
-      <div class="info-row"><span class="info-icon">👤</span><span><strong>Timmy</strong> — Library system administrator</span></div>
-      <div class="info-row"><span class="info-icon">👤</span><span><strong>Pierre</strong> — Director, Life Sciences</span></div>
+      <div class="info-row"><span class="info-icon">👤</span><span><strong>Shane Mc Cauley</strong> — Library manager</span></div>
+      <div class="info-row"><span class="info-icon">👤</span><span><strong>Timmy Cotorobai</strong> — Library system administrator</span></div>
     </div>
   </div>
 </div>
@@ -666,11 +693,13 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
 <!-- ══ JAVASCRIPT ═════════════════════════════════════ -->
 <script>
 // ── Storage keys ──────────────────────────────────────
-const K_BOOKS   = 'lib_books_v2';
-const K_LOANS   = 'lib_loans_v2';
-const K_HISTORY = 'lib_history_v2';
-const K_SETTINGS= 'lib_settings_v2';
-const K_PIN     = 'lib_pin_v2';
+const K_BOOKS    = 'lib_books_v2';
+const K_LOANS    = 'lib_loans_v2';
+const K_HISTORY  = 'lib_history_v2';
+const K_SETTINGS = 'lib_settings_v2';
+const K_PIN      = 'lib_pin_v2';
+const K_EMAIL    = 'lib_email_v2';
+const K_SENT     = 'lib_sent_v2';
 
 // ── State ──────────────────────────────────────────────
 let books    = [];
@@ -683,6 +712,8 @@ let selectedBookId = null;
 let selectedDays   = 14;
 let currentFilter  = 'all';
 let pendingConfirmFn = null;
+let emailCfg = { pubkey:'', serviceId:'', templateId:'', admin1:'', admin2:'' };
+let sentLog  = {};  // { "loanId_type_date": true }
 
 // ── Colour palette ─────────────────────────────────────
 const SPINE_COLORS = [
@@ -705,10 +736,15 @@ function init(){
   history  = load(K_HISTORY, []);
   settings = load(K_SETTINGS, settings);
   adminPin = load(K_PIN, '1234');
+  emailCfg = load(K_EMAIL, emailCfg);
+  sentLog  = load(K_SENT, {});
+  if(emailCfg.pubkey) emailjs.init(emailCfg.pubkey);
   applySettings();
   renderBooks();
   updateHeaderBadge();
   checkOverdueBadge();
+  // Run scheduled email checks silently on every page load
+  setTimeout(runScheduledEmails, 1500);
 }
 
 function defaultBooks(){
@@ -861,6 +897,18 @@ function confirmCheckout(){
   updateHeaderBadge();
   checkOverdueBadge();
   showToast(`✓ "${b.title}" checked out to ${name}. Due ${fmtShort(due.toISOString())}`, 'success');
+  // Send confirmation email
+  sendEmail({
+    to_email:   email,
+    to_name:    name,
+    subject:    `📚 You've borrowed: ${b.title}`,
+    message_type: 'confirmation',
+    book_title: b.title,
+    book_author:b.author,
+    due_date:   fmtDate(due.toISOString()),
+    days:       selectedDays,
+    library_name: settings.libname,
+  });
 }
 
 // ── My Loans ────────────────────────────────────────────
@@ -1010,6 +1058,14 @@ function renderAdminPanel(){
   // Settings
   document.getElementById('setting-libname').value  = settings.libname;
   document.getElementById('setting-location').value = settings.location;
+  // Email settings
+  document.getElementById('setting-ejs-pubkey').value   = emailCfg.pubkey   || '';
+  document.getElementById('setting-ejs-service').value  = emailCfg.serviceId || '';
+  document.getElementById('setting-ejs-template').value = emailCfg.templateId|| '';
+  document.getElementById('setting-admin1').value        = emailCfg.admin1   || '';
+  document.getElementById('setting-admin2').value        = emailCfg.admin2   || '';
+  if(emailCfg.pubkey) showEmailStatus('Email notifications active ✓', true);
+  else showEmailStatus('Email credentials not yet configured', false);
 }
 
 function adminReturn(loanId){
@@ -1067,6 +1123,16 @@ function saveSettings(){
   if(newPin){ if(newPin.length===4 && /^\d+$/.test(newPin)){ adminPin=newPin; save(K_PIN,adminPin); } else { showToast('PIN must be exactly 4 digits','error'); return; } }
   save(K_SETTINGS, settings);
   applySettings();
+  // Save EmailJS config
+  const pk  = document.getElementById('setting-ejs-pubkey').value.trim();
+  const svc = document.getElementById('setting-ejs-service').value.trim();
+  const tpl = document.getElementById('setting-ejs-template').value.trim();
+  const a1  = document.getElementById('setting-admin1').value.trim();
+  const a2  = document.getElementById('setting-admin2').value.trim();
+  emailCfg = { pubkey:pk, serviceId:svc, templateId:tpl, admin1:a1, admin2:a2 };
+  save(K_EMAIL, emailCfg);
+  if(pk){ emailjs.init(pk); showEmailStatus('Email notifications active ✓', true); }
+  else  { showEmailStatus('Email credentials not set — notifications inactive', false); }
   showToast('Settings saved ✓','success');
 }
 
@@ -1083,6 +1149,169 @@ function confirmClearHistory(){
     renderAdminPanel();
     showToast('Loan history cleared');
   });
+}
+
+// ── Email system ───────────────────────────────────────
+
+function emailReady(){
+  return emailCfg.pubkey && emailCfg.serviceId && emailCfg.templateId;
+}
+
+function todayKey(){ return new Date().toISOString().slice(0,10); } // "2025-03-25"
+
+function alreadySent(loanId, type){
+  const key = `${loanId}_${type}_${todayKey()}`;
+  return !!sentLog[key];
+}
+function markSent(loanId, type){
+  const key = `${loanId}_${type}_${todayKey()}`;
+  sentLog[key] = true;
+  // Prune entries older than 60 days to keep storage clean
+  const cutoff = new Date(); cutoff.setDate(cutoff.getDate()-60);
+  Object.keys(sentLog).forEach(k=>{
+    const d = k.split('_')[2]; if(d && new Date(d)<cutoff) delete sentLog[k];
+  });
+  save(K_SENT, sentLog);
+}
+
+function daysUntilDue(loan){
+  const now = new Date(); now.setHours(0,0,0,0);
+  const due = new Date(loan.dueDate); due.setHours(0,0,0,0);
+  return Math.round((due-now)/(1000*60*60*24));
+}
+
+// Core send function — wraps EmailJS
+function sendEmail(params){
+  if(!emailReady()) return Promise.resolve(false);
+  return emailjs.send(emailCfg.serviceId, emailCfg.templateId, params)
+    .then(()=>true)
+    .catch(err=>{ console.warn('EmailJS error:', err); return false; });
+}
+
+// Checkout confirmation — sent immediately on borrow
+// (called from confirmCheckout, params already built there)
+
+// Scheduled checks — run silently on every page load
+function runScheduledEmails(){
+  if(!emailReady()) return;
+  loans.forEach(loan=>{
+    const days = daysUntilDue(loan);
+
+    // 3-day reminder to borrower
+    if(days === 3 && !alreadySent(loan.id,'reminder3')){
+      sendEmail({
+        to_email:     loan.email,
+        to_name:      loan.borrower,
+        subject:      `⏰ Reminder: "${loan.bookTitle}" due in 3 days`,
+        message_type: 'reminder_3day',
+        book_title:   loan.bookTitle,
+        due_date:     fmtDate(loan.dueDate),
+        library_name: settings.libname,
+      }).then(ok=>{ if(ok) markSent(loan.id,'reminder3'); });
+    }
+
+    // Due-today reminder to borrower
+    if(days === 0 && !alreadySent(loan.id,'duetoday')){
+      sendEmail({
+        to_email:     loan.email,
+        to_name:      loan.borrower,
+        subject:      `📅 Today is the last day: "${loan.bookTitle}"`,
+        message_type: 'due_today',
+        book_title:   loan.bookTitle,
+        due_date:     fmtDate(loan.dueDate),
+        library_name: settings.libname,
+      }).then(ok=>{ if(ok) markSent(loan.id,'duetoday'); });
+    }
+
+    // Overdue — daily email to borrower + both admins
+    if(days < 0 && !alreadySent(loan.id,'overdue')){
+      const daysLate = Math.abs(days);
+      // To borrower
+      sendEmail({
+        to_email:     loan.email,
+        to_name:      loan.borrower,
+        subject:      `🚨 Overdue (${daysLate} day${daysLate>1?'s':''}): "${loan.bookTitle}"`,
+        message_type: 'overdue_borrower',
+        book_title:   loan.bookTitle,
+        due_date:     fmtDate(loan.dueDate),
+        days_late:    daysLate,
+        library_name: settings.libname,
+      });
+      // To admin 1 (Timmy)
+      if(emailCfg.admin1){
+        sendEmail({
+          to_email:     emailCfg.admin1,
+          to_name:      'Timmy',
+          subject:      `🚨 Library overdue: ${loan.borrower} — "${loan.bookTitle}"`,
+          message_type: 'overdue_admin',
+          book_title:   loan.bookTitle,
+          borrower:     loan.borrower,
+          borrower_email: loan.email,
+          due_date:     fmtDate(loan.dueDate),
+          days_late:    daysLate,
+          library_name: settings.libname,
+        });
+      }
+      // To admin 2 (Shane)
+      if(emailCfg.admin2){
+        sendEmail({
+          to_email:     emailCfg.admin2,
+          to_name:      'Shane',
+          subject:      `🚨 Library overdue: ${loan.borrower} — "${loan.bookTitle}"`,
+          message_type: 'overdue_admin',
+          book_title:   loan.bookTitle,
+          borrower:     loan.borrower,
+          borrower_email: loan.email,
+          due_date:     fmtDate(loan.dueDate),
+          days_late:    daysLate,
+          library_name: settings.libname,
+        }).then(ok=>{ if(ok) markSent(loan.id,'overdue'); });
+      } else {
+        // No admin2 — still mark sent after borrower email
+        sendEmail({
+          to_email: loan.email, to_name: loan.borrower,
+          subject:'', message_type:'', book_title:'', due_date:'', days_late:0, library_name:''
+        }).then(()=>{}); // already sent above, just mark
+        markSent(loan.id,'overdue');
+      }
+      markSent(loan.id,'overdue');
+    }
+  });
+}
+
+// Test email button
+function testEmail(){
+  if(!emailReady()){
+    showToast('Please fill in and save EmailJS credentials first','error');
+    return;
+  }
+  if(!emailCfg.admin1){
+    showToast('Please enter your admin email address first','error');
+    return;
+  }
+  sendEmail({
+    to_email:     emailCfg.admin1,
+    to_name:      'Timmy',
+    subject:      '✅ Test — Library email system is working',
+    message_type: 'test',
+    book_title:   'Test Book Title',
+    due_date:     fmtDate(new Date().toISOString()),
+    library_name: settings.libname,
+    message:      'This is a test email confirming your library notification system is correctly set up.',
+  }).then(ok=>{
+    if(ok) showToast('Test email sent! Check your inbox.','success');
+    else   showToast('Send failed — double-check your credentials','error');
+  });
+}
+
+function showEmailStatus(msg, ok){
+  const el = document.getElementById('email-config-status');
+  if(!el) return;
+  el.style.display = 'block';
+  el.style.background = ok ? 'var(--green-bg)' : 'var(--orange-bg)';
+  el.style.color      = ok ? 'var(--green)'    : 'var(--orange)';
+  el.style.border     = ok ? '1px solid #a0d8b8' : '1px solid #f0d0a0';
+  el.textContent = msg;
 }
 
 // ── UI helpers ─────────────────────────────────────────

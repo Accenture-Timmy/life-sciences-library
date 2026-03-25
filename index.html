@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<meta name="theme-color" content="#6c1686">
+<meta name="theme-color" content="#a100ff">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Life Sciences Library · Accenture</title>
@@ -14,30 +14,32 @@
 /* ── Reset & Base ─────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
-body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-height:100vh;font-size:15px;line-height:1.6}
+body{font-family:'DM Sans',sans-serif;background:#f8f7fc;color:#1a1a1a;min-height:100vh;font-size:15px;line-height:1.6}
 
 /* ── CSS Variables ────────────────────────────────────── */
 :root{
-  --navy:#6c1686;
-  --navy-light:#1a3a6b;
-  --gold:#b8963e;
-  --gold-light:#f0e6cc;
-  --cream:#f5f3ee;
-  --cream-dark:#ede9e0;
+  --navy:#a100ff;
+  --navy-dark:#6f00b3;
+  --navy-light:#c340ff;
+  --accent:#a100ff;
+  --gold:#a100ff;
+  --gold-light:#f3e6ff;
+  --cream:#f8f7fc;
+  --cream-dark:#ede8f5;
   --white:#ffffff;
   --text:#1a1a1a;
   --text-muted:#5a5a5a;
   --text-light:#8a8a8a;
   --green:#1a6b42;
   --green-bg:#e8f5ee;
-  --red:#b02828;
-  --red-bg:#fce8e8;
+  --red:#c0392b;
+  --red-bg:#fce8e6;
   --orange:#b86a1a;
   --orange-bg:#fef0e0;
-  --border:#ddd8ce;
-  --border-dark:#c8c0b0;
-  --shadow:0 2px 12px rgba(15,35,66,0.08);
-  --shadow-lg:0 8px 32px rgba(15,35,66,0.12);
+  --border:#e2daf0;
+  --border-dark:#c8b8e0;
+  --shadow:0 2px 12px rgba(161,0,255,0.07);
+  --shadow-lg:0 8px 32px rgba(161,0,255,0.13);
   --radius:10px;
   --radius-lg:16px;
   --radius-xl:24px;
@@ -45,36 +47,36 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
 
 /* ── Header ───────────────────────────────────────────── */
 .site-header{
-  background:var(--navy);
+  background:#a100ff;
   color:var(--white);
   padding:0 20px;
   position:sticky;top:0;z-index:50;
-  border-bottom:2px solid var(--gold);
+  border-bottom:none;
+  box-shadow:0 2px 16px rgba(161,0,255,0.18);
 }
 .header-inner{
   max-width:800px;margin:0 auto;
   display:flex;align-items:center;justify-content:space-between;
-  height:58px;
+  height:60px;
 }
-.header-brand{display:flex;align-items:center;gap:12px}
+.header-brand{display:flex;align-items:center;gap:14px}
 .header-logo{
-  width:36px;height:36px;background:var(--gold);
-  border-radius:8px;display:flex;align-items:center;justify-content:center;
-  font-family:'Playfair Display',serif;font-size:18px;color:var(--navy);font-weight:600;
+  display:flex;align-items:center;justify-content:center;
   flex-shrink:0;
 }
-.header-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:400;letter-spacing:0.2px}
-.header-sub{font-size:11px;color:rgba(255,255,255,0.55);letter-spacing:0.5px;text-transform:uppercase;margin-top:1px}
+.header-logo svg{width:32px;height:32px;fill:#ffffff}
+.header-title{font-family:'DM Sans',sans-serif;font-size:17px;font-weight:500;letter-spacing:-0.2px}
+.header-sub{font-size:11px;color:rgba(255,255,255,0.6);letter-spacing:0.3px;margin-top:1px}
 .header-badge{
-  background:rgba(255,255,255,0.1);
-  border:1px solid rgba(255,255,255,0.2);
-  border-radius:20px;padding:4px 10px;
-  font-size:11px;color:rgba(255,255,255,0.75);
-  white-space:nowrap;
+  background:rgba(255,255,255,0.15);
+  border:1px solid rgba(255,255,255,0.25);
+  border-radius:20px;padding:5px 12px;
+  font-size:11px;color:rgba(255,255,255,0.9);
+  white-space:nowrap;font-weight:500;
 }
 
 /* ── Nav Tabs ─────────────────────────────────────────── */
-.nav-wrap{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:58px;z-index:40}
+.nav-wrap{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:60px;z-index:40;box-shadow:0 1px 4px rgba(161,0,255,0.05)}
 .nav-inner{max-width:800px;margin:0 auto;display:flex}
 .nav-tab{
   flex:1;padding:13px 8px;text-align:center;
@@ -85,7 +87,7 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
   display:flex;align-items:center;justify-content:center;gap:6px;
 }
 .nav-tab:hover{color:var(--navy)}
-.nav-tab.active{color:var(--navy);border-bottom-color:var(--gold)}
+.nav-tab.active{color:var(--navy);border-bottom-color:var(--navy)}
 .nav-tab .tab-icon{font-size:15px}
 .nav-tab .tab-badge{
   background:var(--red);color:#fff;
@@ -105,28 +107,28 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
 
 /* ── Hero (Browse page) ───────────────────────────────── */
 .hero{
-  background:var(--navy);color:var(--white);
+  background:linear-gradient(135deg,#a100ff 0%,#7000b3 100%);color:var(--white);
   border-radius:var(--radius-lg);
   padding:24px 24px 20px;
   margin-bottom:20px;
   position:relative;overflow:hidden;
 }
 .hero::before{
-  content:'';position:absolute;top:-20px;right:-20px;
-  width:140px;height:140px;
+  content:'';position:absolute;top:-30px;right:-30px;
+  width:160px;height:160px;
   border-radius:50%;
-  background:rgba(184,150,62,0.15);
+  background:rgba(255,255,255,0.08);
 }
 .hero::after{
-  content:'';position:absolute;bottom:-30px;right:40px;
-  width:80px;height:80px;
+  content:'';position:absolute;bottom:-20px;right:50px;
+  width:90px;height:90px;
   border-radius:50%;
-  background:rgba(184,150,62,0.1);
+  background:rgba(255,255,255,0.05);
 }
 .hero h2{font-family:'Playfair Display',serif;font-size:22px;font-weight:400;margin-bottom:4px}
 .hero p{font-size:13px;color:rgba(255,255,255,0.65);margin-bottom:16px}
 .hero-stats{display:flex;gap:20px}
-.hero-stat .num{font-size:24px;font-weight:500;color:var(--gold)}
+.hero-stat .num{font-size:24px;font-weight:500;color:rgba(255,255,255,0.95)}
 .hero-stat .lbl{font-size:11px;color:rgba(255,255,255,0.55);text-transform:uppercase;letter-spacing:0.5px}
 
 /* ── Search & Filter ──────────────────────────────────── */
@@ -138,7 +140,7 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
   transition:border-color .15s,box-shadow .15s;
   font-family:'DM Sans',sans-serif;
 }
-.search-wrap input:focus{outline:none;border-color:var(--navy-light);box-shadow:0 0 0 3px rgba(26,58,107,0.1)}
+.search-wrap input:focus{outline:none;border-color:#a100ff;box-shadow:0 0 0 3px rgba(161,0,255,0.12)}
 .search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-light);font-size:15px;pointer-events:none}
 .filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
 .filter-chip{
@@ -148,7 +150,7 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
   transition:all .15s;white-space:nowrap;
 }
 .filter-chip:hover{border-color:var(--navy-light);color:var(--navy)}
-.filter-chip.active{background:var(--navy);color:var(--white);border-color:var(--navy)}
+.filter-chip.active{background:#a100ff;color:var(--white);border-color:#a100ff}
 
 /* ── Book Cards ───────────────────────────────────────── */
 .books-grid{display:flex;flex-direction:column;gap:10px}
@@ -159,7 +161,7 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
   cursor:pointer;transition:all .15s;
   position:relative;
 }
-.book-card:hover{border-color:var(--navy-light);box-shadow:var(--shadow)}
+.book-card:hover{border-color:#c340ff;box-shadow:var(--shadow)}
 .book-card.unavailable{cursor:default;opacity:0.75}
 .book-card.unavailable:hover{border-color:var(--border);box-shadow:none}
 .book-spine{
@@ -241,7 +243,7 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
 }
 .form-input:focus,.form-select:focus{
   outline:none;border-color:var(--navy-light);
-  box-shadow:0 0 0 3px rgba(26,58,107,0.1);
+  box-shadow:0 0 0 3px rgba(161,0,255,0.12);
 }
 .form-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235a5a5a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
 .form-hint{font-size:12px;color:var(--text-light);margin-top:4px}
@@ -326,7 +328,7 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
   background:var(--white);border:1px solid var(--border);
   border-radius:var(--radius-lg);padding:16px;text-align:center;
 }
-.stat-num{font-size:28px;font-weight:500;color:var(--navy);font-family:'Playfair Display',serif}
+.stat-num{font-size:28px;font-weight:500;color:#a100ff;font-family:'Playfair Display',serif}
 .stat-lbl{font-size:11px;color:var(--text-light);text-transform:uppercase;letter-spacing:0.5px;margin-top:2px}
 .section-card{
   background:var(--white);border:1px solid var(--border);
@@ -335,7 +337,7 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
 .section-card-head{
   padding:14px 16px;border-bottom:1px solid var(--border);
   display:flex;justify-content:space-between;align-items:center;
-  background:var(--cream);
+  background:#faf7ff;
 }
 .section-card-head h3{font-size:14px;font-weight:500}
 .section-card-body{padding:16px}
@@ -362,7 +364,7 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
 
 /* ── About Page ───────────────────────────────────────── */
 .about-hero{
-  background:var(--navy);color:var(--white);
+  background:linear-gradient(135deg,#a100ff 0%,#7000b3 100%);color:var(--white);
   border-radius:var(--radius-lg);padding:28px 24px;
   margin-bottom:16px;text-align:center;
 }
@@ -374,7 +376,7 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
 .info-icon{font-size:16px;flex-shrink:0;margin-top:1px}
 .rules-list{list-style:none;display:flex;flex-direction:column;gap:8px}
 .rules-list li{display:flex;gap:10px;font-size:14px;align-items:flex-start}
-.rule-num{width:22px;height:22px;background:var(--gold-light);color:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;margin-top:1px}
+.rule-num{width:22px;height:22px;background:#f3e6ff;color:#a100ff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;margin-top:1px}
 
 /* ── Duration Selector ────────────────────────────────── */
 .duration-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:6px}
@@ -385,9 +387,9 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
 }
 .dur-btn .dur-weeks{font-size:16px;font-weight:500;color:var(--text);display:block}
 .dur-btn .dur-label{font-size:11px;color:var(--text-muted);display:block}
-.dur-btn.selected{border-color:var(--navy);background:#e8f0fe}
-.dur-btn.selected .dur-weeks{color:var(--navy)}
-.dur-btn.selected .dur-label{color:var(--navy-light)}
+.dur-btn.selected{border-color:#a100ff;background:#f3e6ff}
+.dur-btn.selected .dur-weeks{color:#a100ff}
+.dur-btn.selected .dur-label{color:#7000b3}
 
 /* ── Responsive ───────────────────────────────────────── */
 @media(max-width:480px){
@@ -426,7 +428,9 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
 <header class="site-header">
   <div class="header-inner">
     <div class="header-brand">
-      <div class="header-logo">L</div>
+      <div class="header-logo">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><polygon points="10,10 90,50 10,90" fill="white"/></svg>
+      </div>
       <div>
         <div class="header-title">Life Sciences Library</div>
         <div class="header-sub">Accenture · Floor Library</div>
@@ -574,7 +578,7 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
 
           <hr style="border:none;border-top:1px solid var(--cream-dark);margin:18px 0 16px">
           <p style="font-size:14px;font-weight:500;margin-bottom:3px;color:var(--text)">📧 Email notifications</p>
-          <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px">Paste your EmailJS credentials here to activate automatic emails. Sent on checkout, at 3 days before due, on the due date, and daily when overdue.</p>
+          <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px">Paste your EmailJS credentials here to activate automatic emails. Emails are sent at two points only: (1) immediately when a book is borrowed, and (2) one day before the due date. Overdue books are visible on the admin page for you to follow up directly.</p>
           <div class="form-group">
             <label class="form-label">EmailJS Public Key</label>
             <input class="form-input" id="setting-ejs-pubkey" placeholder="e.g. aBcDeFgH1234567">
@@ -615,6 +619,7 @@ body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-heigh
     <div class="about-hero">
       <h2>About this library</h2>
       <p>A shared reading resource for the Accenture Life Sciences practice team.</p>
+      <div style="margin-top:14px;display:inline-block;background:rgba(255,255,255,0.15);border-radius:20px;padding:4px 14px;font-size:11px;letter-spacing:0.5px;text-transform:uppercase">Accenture Life Sciences Practice</div>
     </div>
     <div class="info-card">
       <h3>How to borrow a book</h3>
@@ -897,18 +902,7 @@ function confirmCheckout(){
   updateHeaderBadge();
   checkOverdueBadge();
   showToast(`✓ "${b.title}" checked out to ${name}. Due ${fmtShort(due.toISOString())}`, 'success');
-  // Send confirmation email
-  sendEmail({
-    to_email:   email,
-    to_name:    name,
-    subject:    `📚 You've borrowed: ${b.title}`,
-    message_type: 'confirmation',
-    book_title: b.title,
-    book_author:b.author,
-    due_date:   fmtDate(due.toISOString()),
-    days:       selectedDays,
-    library_name: settings.libname,
-  });
+  sendConfirmationEmail(loan, due.toISOString());
 }
 
 // ── My Loans ────────────────────────────────────────────
@@ -1152,21 +1146,20 @@ function confirmClearHistory(){
 }
 
 // ── Email system ───────────────────────────────────────
+// Only 2 emails per loan: (1) checkout confirmation, (2) 1-day-before reminder.
+// No overdue emails — admin page shows overdue status for manual follow-up.
 
 function emailReady(){
-  return emailCfg.pubkey && emailCfg.serviceId && emailCfg.templateId;
+  return !!(emailCfg.pubkey && emailCfg.serviceId && emailCfg.templateId);
 }
 
-function todayKey(){ return new Date().toISOString().slice(0,10); } // "2025-03-25"
+function todayKey(){ return new Date().toISOString().slice(0,10); }
 
 function alreadySent(loanId, type){
-  const key = `${loanId}_${type}_${todayKey()}`;
-  return !!sentLog[key];
+  return !!sentLog[`${loanId}_${type}_${todayKey()}`];
 }
 function markSent(loanId, type){
-  const key = `${loanId}_${type}_${todayKey()}`;
-  sentLog[key] = true;
-  // Prune entries older than 60 days to keep storage clean
+  sentLog[`${loanId}_${type}_${todayKey()}`] = true;
   const cutoff = new Date(); cutoff.setDate(cutoff.getDate()-60);
   Object.keys(sentLog).forEach(k=>{
     const d = k.split('_')[2]; if(d && new Date(d)<cutoff) delete sentLog[k];
@@ -1177,128 +1170,54 @@ function markSent(loanId, type){
 function daysUntilDue(loan){
   const now = new Date(); now.setHours(0,0,0,0);
   const due = new Date(loan.dueDate); due.setHours(0,0,0,0);
-  return Math.round((due-now)/(1000*60*60*24));
+  return Math.round((due - now) / 86400000);
 }
 
-// Core send function — wraps EmailJS
-function sendEmail(params){
+// Core send — template just needs {{to_email}}, {{to_name}}, {{subject}}, {{message}}
+function sendEmail(toEmail, toName, subject, message){
   if(!emailReady()) return Promise.resolve(false);
-  return emailjs.send(emailCfg.serviceId, emailCfg.templateId, params)
-    .then(()=>true)
-    .catch(err=>{ console.warn('EmailJS error:', err); return false; });
+  return emailjs.send(emailCfg.serviceId, emailCfg.templateId, {
+    to_email: toEmail,
+    to_name:  toName,
+    subject:  subject,
+    message:  message,
+  }).then(()=>true).catch(err=>{ console.warn('EmailJS:', err); return false; });
 }
 
-// Checkout confirmation — sent immediately on borrow
-// (called from confirmCheckout, params already built there)
+// Called immediately on checkout
+function sendConfirmationEmail(loan, dueIso){
+  sendEmail(
+    loan.email, loan.borrower,
+    `📚 Borrowed: ${loan.bookTitle}`,
+    `Hi ${loan.borrower},\n\nYou have successfully borrowed "${loan.bookTitle}" from the ${settings.libname}.\n\nPlease return it by: ${fmtDate(dueIso)}\n\nTo check your loan or return the book early, visit the library page and go to My Loans.\n\n– ${settings.libname}`
+  );
+}
 
-// Scheduled checks — run silently on every page load
+// Runs on every page load — sends 1-day reminder only, once per loan
 function runScheduledEmails(){
   if(!emailReady()) return;
   loans.forEach(loan=>{
     const days = daysUntilDue(loan);
-
-    // 3-day reminder to borrower
-    if(days === 3 && !alreadySent(loan.id,'reminder3')){
-      sendEmail({
-        to_email:     loan.email,
-        to_name:      loan.borrower,
-        subject:      `⏰ Reminder: "${loan.bookTitle}" due in 3 days`,
-        message_type: 'reminder_3day',
-        book_title:   loan.bookTitle,
-        due_date:     fmtDate(loan.dueDate),
-        library_name: settings.libname,
-      }).then(ok=>{ if(ok) markSent(loan.id,'reminder3'); });
-    }
-
-    // Due-today reminder to borrower
-    if(days === 0 && !alreadySent(loan.id,'duetoday')){
-      sendEmail({
-        to_email:     loan.email,
-        to_name:      loan.borrower,
-        subject:      `📅 Today is the last day: "${loan.bookTitle}"`,
-        message_type: 'due_today',
-        book_title:   loan.bookTitle,
-        due_date:     fmtDate(loan.dueDate),
-        library_name: settings.libname,
-      }).then(ok=>{ if(ok) markSent(loan.id,'duetoday'); });
-    }
-
-    // Overdue — daily email to borrower + both admins
-    if(days < 0 && !alreadySent(loan.id,'overdue')){
-      const daysLate = Math.abs(days);
-      // To borrower
-      sendEmail({
-        to_email:     loan.email,
-        to_name:      loan.borrower,
-        subject:      `🚨 Overdue (${daysLate} day${daysLate>1?'s':''}): "${loan.bookTitle}"`,
-        message_type: 'overdue_borrower',
-        book_title:   loan.bookTitle,
-        due_date:     fmtDate(loan.dueDate),
-        days_late:    daysLate,
-        library_name: settings.libname,
-      });
-      // To admin 1 (Timmy)
-      if(emailCfg.admin1){
-        sendEmail({
-          to_email:     emailCfg.admin1,
-          to_name:      'Timmy',
-          subject:      `🚨 Library overdue: ${loan.borrower} — "${loan.bookTitle}"`,
-          message_type: 'overdue_admin',
-          book_title:   loan.bookTitle,
-          borrower:     loan.borrower,
-          borrower_email: loan.email,
-          due_date:     fmtDate(loan.dueDate),
-          days_late:    daysLate,
-          library_name: settings.libname,
-        });
-      }
-      // To admin 2 (Shane)
-      if(emailCfg.admin2){
-        sendEmail({
-          to_email:     emailCfg.admin2,
-          to_name:      'Shane',
-          subject:      `🚨 Library overdue: ${loan.borrower} — "${loan.bookTitle}"`,
-          message_type: 'overdue_admin',
-          book_title:   loan.bookTitle,
-          borrower:     loan.borrower,
-          borrower_email: loan.email,
-          due_date:     fmtDate(loan.dueDate),
-          days_late:    daysLate,
-          library_name: settings.libname,
-        }).then(ok=>{ if(ok) markSent(loan.id,'overdue'); });
-      } else {
-        // No admin2 — still mark sent after borrower email
-        sendEmail({
-          to_email: loan.email, to_name: loan.borrower,
-          subject:'', message_type:'', book_title:'', due_date:'', days_late:0, library_name:''
-        }).then(()=>{}); // already sent above, just mark
-        markSent(loan.id,'overdue');
-      }
-      markSent(loan.id,'overdue');
+    // 1-day-before reminder — sent once
+    if(days === 1 && !alreadySent(loan.id,'rem1')){
+      sendEmail(
+        loan.email, loan.borrower,
+        `⏰ Reminder: "${loan.bookTitle}" due tomorrow`,
+        `Hi ${loan.borrower},\n\nJust a reminder that "${loan.bookTitle}" is due back tomorrow, ${fmtDate(loan.dueDate)}.\n\nPlease return it to the bookshelf. You can also check your loan at the library page under My Loans.\n\n– ${settings.libname}`
+      ).then(ok=>{ if(ok) markSent(loan.id,'rem1'); });
     }
   });
 }
 
-// Test email button
+// Test email — sends to admin1
 function testEmail(){
-  if(!emailReady()){
-    showToast('Please fill in and save EmailJS credentials first','error');
-    return;
-  }
-  if(!emailCfg.admin1){
-    showToast('Please enter your admin email address first','error');
-    return;
-  }
-  sendEmail({
-    to_email:     emailCfg.admin1,
-    to_name:      'Timmy',
-    subject:      '✅ Test — Library email system is working',
-    message_type: 'test',
-    book_title:   'Test Book Title',
-    due_date:     fmtDate(new Date().toISOString()),
-    library_name: settings.libname,
-    message:      'This is a test email confirming your library notification system is correctly set up.',
-  }).then(ok=>{
+  if(!emailReady()){ showToast('Please save your EmailJS credentials first','error'); return; }
+  if(!emailCfg.admin1){ showToast('Please enter your admin email address first','error'); return; }
+  sendEmail(
+    emailCfg.admin1, 'Timmy',
+    '✅ Test — Library email system is working',
+    `Hi Timmy,\n\nThis is a test email confirming that the ${settings.libname} email notification system is correctly set up.\n\nBorrowers will receive:\n• A confirmation email when they borrow a book\n• A reminder email the day before their book is due\n\nOverdue books are visible in the Admin panel for direct follow-up.\n\n– ${settings.libname}`
+  ).then(ok=>{
     if(ok) showToast('Test email sent! Check your inbox.','success');
     else   showToast('Send failed — double-check your credentials','error');
   });
@@ -1307,9 +1226,9 @@ function testEmail(){
 function showEmailStatus(msg, ok){
   const el = document.getElementById('email-config-status');
   if(!el) return;
-  el.style.display = 'block';
-  el.style.background = ok ? 'var(--green-bg)' : 'var(--orange-bg)';
-  el.style.color      = ok ? 'var(--green)'    : 'var(--orange)';
+  el.style.display    = 'block';
+  el.style.background = ok ? 'var(--green-bg)'  : 'var(--orange-bg)';
+  el.style.color      = ok ? 'var(--green)'      : 'var(--orange)';
   el.style.border     = ok ? '1px solid #a0d8b8' : '1px solid #f0d0a0';
   el.textContent = msg;
 }

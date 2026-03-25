@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#0f2342">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Life Sciences Library · Accenture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & Base ─────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
+body{font-family:'DM Sans',sans-serif;background:#f5f3ee;color:#1a1a1a;min-height:100vh;font-size:15px;line-height:1.6}
+
+/* ── CSS Variables ────────────────────────────────────── */
+:root{
+  --navy:#0f2342;
+  --navy-light:#1a3a6b;
+  --gold:#b8963e;
+  --gold-light:#f0e6cc;
+  --cream:#f5f3ee;
+  --cream-dark:#ede9e0;
+  --white:#ffffff;
+  --text:#1a1a1a;
+  --text-muted:#5a5a5a;
+  --text-light:#8a8a8a;
+  --green:#1a6b42;
+  --green-bg:#e8f5ee;
+  --red:#b02828;
+  --red-bg:#fce8e8;
+  --orange:#b86a1a;
+  --orange-bg:#fef0e0;
+  --border:#ddd8ce;
+  --border-dark:#c8c0b0;
+  --shadow:0 2px 12px rgba(15,35,66,0.08);
+  --shadow-lg:0 8px 32px rgba(15,35,66,0.12);
+  --radius:10px;
+  --radius-lg:16px;
+  --radius-xl:24px;
+}
+
+/* ── Header ───────────────────────────────────────────── */
+.site-header{
+  background:var(--navy);
+  color:var(--white);
+  padding:0 20px;
+  position:sticky;top:0;z-index:50;
+  border-bottom:2px solid var(--gold);
+}
+.header-inner{
+  max-width:800px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  height:58px;
+}
+.header-brand{display:flex;align-items:center;gap:12px}
+.header-logo{
+  width:36px;height:36px;background:var(--gold);
+  border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-size:18px;color:var(--navy);font-weight:600;
+  flex-shrink:0;
+}
+.header-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:400;letter-spacing:0.2px}
+.header-sub{font-size:11px;color:rgba(255,255,255,0.55);letter-spacing:0.5px;text-transform:uppercase;margin-top:1px}
+.header-badge{
+  background:rgba(255,255,255,0.1);
+  border:1px solid rgba(255,255,255,0.2);
+  border-radius:20px;padding:4px 10px;
+  font-size:11px;color:rgba(255,255,255,0.75);
+  white-space:nowrap;
+}
+
+/* ── Nav Tabs ─────────────────────────────────────────── */
+.nav-wrap{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:58px;z-index:40}
+.nav-inner{max-width:800px;margin:0 auto;display:flex}
+.nav-tab{
+  flex:1;padding:13px 8px;text-align:center;
+  font-size:13px;font-weight:500;color:var(--text-muted);
+  border:none;background:transparent;cursor:pointer;
+  border-bottom:2px solid transparent;
+  transition:color .15s,border-color .15s;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.nav-tab:hover{color:var(--navy)}
+.nav-tab.active{color:var(--navy);border-bottom-color:var(--gold)}
+.nav-tab .tab-icon{font-size:15px}
+.nav-tab .tab-badge{
+  background:var(--red);color:#fff;
+  border-radius:10px;padding:1px 6px;
+  font-size:10px;font-weight:600;
+  display:none;
+}
+.nav-tab .tab-badge.show{display:inline-block}
+
+/* ── Page Sections ────────────────────────────────────── */
+.page{display:none;animation:fadeIn .2s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── Container ────────────────────────────────────────── */
+.container{max-width:800px;margin:0 auto;padding:20px 16px 80px}
+
+/* ── Hero (Browse page) ───────────────────────────────── */
+.hero{
+  background:var(--navy);color:var(--white);
+  border-radius:var(--radius-lg);
+  padding:24px 24px 20px;
+  margin-bottom:20px;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:-20px;right:-20px;
+  width:140px;height:140px;
+  border-radius:50%;
+  background:rgba(184,150,62,0.15);
+}
+.hero::after{
+  content:'';position:absolute;bottom:-30px;right:40px;
+  width:80px;height:80px;
+  border-radius:50%;
+  background:rgba(184,150,62,0.1);
+}
+.hero h2{font-family:'Playfair Display',serif;font-size:22px;font-weight:400;margin-bottom:4px}
+.hero p{font-size:13px;color:rgba(255,255,255,0.65);margin-bottom:16px}
+.hero-stats{display:flex;gap:20px}
+.hero-stat .num{font-size:24px;font-weight:500;color:var(--gold)}
+.hero-stat .lbl{font-size:11px;color:rgba(255,255,255,0.55);text-transform:uppercase;letter-spacing:0.5px}
+
+/* ── Search & Filter ──────────────────────────────────── */
+.search-wrap{position:relative;margin-bottom:12px}
+.search-wrap input{
+  width:100%;padding:11px 16px 11px 42px;
+  border:1px solid var(--border);border-radius:var(--radius);
+  font-size:14px;background:var(--white);
+  transition:border-color .15s,box-shadow .15s;
+  font-family:'DM Sans',sans-serif;
+}
+.search-wrap input:focus{outline:none;border-color:var(--navy-light);box-shadow:0 0 0 3px rgba(26,58,107,0.1)}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-light);font-size:15px;pointer-events:none}
+.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.filter-chip{
+  padding:6px 14px;border:1px solid var(--border);
+  border-radius:20px;font-size:12px;font-weight:500;
+  background:var(--white);color:var(--text-muted);cursor:pointer;
+  transition:all .15s;white-space:nowrap;
+}
+.filter-chip:hover{border-color:var(--navy-light);color:var(--navy)}
+.filter-chip.active{background:var(--navy);color:var(--white);border-color:var(--navy)}
+
+/* ── Book Cards ───────────────────────────────────────── */
+.books-grid{display:flex;flex-direction:column;gap:10px}
+.book-card{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:16px;
+  display:flex;gap:14px;align-items:flex-start;
+  cursor:pointer;transition:all .15s;
+  position:relative;
+}
+.book-card:hover{border-color:var(--navy-light);box-shadow:var(--shadow)}
+.book-card.unavailable{cursor:default;opacity:0.75}
+.book-card.unavailable:hover{border-color:var(--border);box-shadow:none}
+.book-spine{
+  width:46px;height:62px;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-size:14px;
+  color:var(--white);font-weight:600;flex-shrink:0;
+  letter-spacing:0.5px;
+}
+.book-body{flex:1;min-width:0}
+.book-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:2px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.book-author{font-size:13px;color:var(--text-muted);margin-bottom:6px}
+.book-footer{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.cat-tag{
+  font-size:11px;padding:3px 8px;border-radius:4px;
+  background:var(--cream-dark);color:var(--text-muted);
+  font-weight:500;
+}
+.status-badge{
+  font-size:11px;font-weight:600;padding:3px 9px;
+  border-radius:20px;margin-left:auto;flex-shrink:0;
+}
+.status-badge.available{background:var(--green-bg);color:var(--green)}
+.status-badge.out{background:var(--red-bg);color:var(--red)}
+.status-badge.overdue{background:var(--orange-bg);color:var(--orange)}
+.due-info{font-size:11px;color:var(--text-light);width:100%}
+
+/* ── Empty State ──────────────────────────────────────── */
+.empty{text-align:center;padding:48px 20px;color:var(--text-muted)}
+.empty-icon{font-size:40px;margin-bottom:12px;opacity:0.4}
+.empty h3{font-size:16px;font-weight:500;margin-bottom:4px;color:var(--text)}
+.empty p{font-size:13px}
+
+/* ── Modal ────────────────────────────────────────────── */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(10,20,40,0.55);
+  z-index:100;display:flex;align-items:flex-end;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .2s;
+}
+.modal-overlay.open{opacity:1;pointer-events:all}
+@media(min-width:600px){
+  .modal-overlay{align-items:center}
+  .modal{border-radius:var(--radius-xl)!important;max-width:480px!important}
+}
+.modal{
+  background:var(--white);
+  border-radius:var(--radius-xl) var(--radius-xl) 0 0;
+  padding:0;width:100%;max-width:100%;
+  transform:translateY(20px);transition:transform .25s cubic-bezier(.34,1.56,.64,1);
+  max-height:92vh;overflow-y:auto;
+}
+.modal-overlay.open .modal{transform:translateY(0)}
+.modal-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:12px auto 0}
+.modal-head{padding:20px 20px 0}
+.modal-head h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:400}
+.modal-head .sub{font-size:13px;color:var(--text-muted);margin-top:4px}
+.modal-body{padding:20px}
+.modal-close{
+  position:absolute;top:16px;right:16px;
+  width:32px;height:32px;border-radius:50%;
+  background:var(--cream);border:none;cursor:pointer;
+  font-size:18px;color:var(--text-muted);display:flex;
+  align-items:center;justify-content:center;
+}
+.modal-close:hover{background:var(--cream-dark)}
+
+/* ── Forms ────────────────────────────────────────────── */
+.form-group{margin-bottom:14px}
+.form-label{display:block;font-size:12px;font-weight:500;color:var(--text-muted);
+  margin-bottom:5px;text-transform:uppercase;letter-spacing:0.5px}
+.form-input,.form-select{
+  width:100%;padding:11px 14px;
+  border:1px solid var(--border);border-radius:var(--radius);
+  font-size:15px;font-family:'DM Sans',sans-serif;
+  background:var(--white);color:var(--text);
+  transition:border-color .15s,box-shadow .15s;
+  -webkit-appearance:none;
+}
+.form-input:focus,.form-select:focus{
+  outline:none;border-color:var(--navy-light);
+  box-shadow:0 0 0 3px rgba(26,58,107,0.1);
+}
+.form-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235a5a5a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+.form-hint{font-size:12px;color:var(--text-light);margin-top:4px}
+
+/* ── Buttons ──────────────────────────────────────────── */
+.btn-primary{
+  width:100%;padding:14px;
+  background:var(--navy);color:var(--white);
+  border:none;border-radius:var(--radius);
+  font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;
+  cursor:pointer;transition:background .15s,transform .1s;
+  letter-spacing:0.2px;
+}
+.btn-primary:hover{background:var(--navy-light)}
+.btn-primary:active{transform:scale(0.99)}
+.btn-primary:disabled{background:var(--text-light);cursor:not-allowed}
+.btn-secondary{
+  width:100%;padding:12px;
+  background:transparent;color:var(--text);
+  border:1px solid var(--border);border-radius:var(--radius);
+  font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;
+  cursor:pointer;transition:all .15s;margin-top:10px;
+}
+.btn-secondary:hover{background:var(--cream);border-color:var(--border-dark)}
+.btn-sm{
+  padding:7px 14px;font-size:13px;border-radius:8px;width:auto;
+}
+.btn-danger{background:var(--red-bg);color:var(--red);border:1px solid #f0c0c0;font-size:13px;padding:7px 14px;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif}
+
+/* ── Toast Notifications ──────────────────────────────── */
+.toast-wrap{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:200;
+  display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none;width:90%;max-width:400px}
+.toast{
+  background:var(--navy);color:var(--white);
+  padding:12px 18px;border-radius:var(--radius);
+  font-size:14px;box-shadow:var(--shadow-lg);
+  animation:toastIn .3s ease,toastOut .3s ease 2.7s forwards;
+  pointer-events:all;text-align:center;width:100%;
+}
+.toast.success{background:var(--green)}
+.toast.error{background:var(--red)}
+@keyframes toastIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes toastOut{from{opacity:1}to{opacity:0}}
+
+/* ── Alert Banner ─────────────────────────────────────── */
+.alert{border-radius:var(--radius);padding:12px 16px;font-size:13px;margin-bottom:16px;display:flex;gap:10px;align-items:flex-start}
+.alert.warning{background:var(--orange-bg);color:var(--orange);border:1px solid #f0d0a0}
+.alert.danger{background:var(--red-bg);color:var(--red);border:1px solid #f0b0b0}
+.alert.success{background:var(--green-bg);color:var(--green);border:1px solid #a0d8b8}
+.alert.info{background:#e8f0fe;color:var(--navy-light);border:1px solid #b8d0f8}
+
+/* ── My Loans Page ────────────────────────────────────── */
+.lookup-card{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:24px;
+  text-align:center;margin-bottom:20px;
+}
+.lookup-card h2{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;margin-bottom:6px}
+.lookup-card p{font-size:13px;color:var(--text-muted);margin-bottom:20px}
+.loan-card{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:16px;margin-bottom:10px;
+}
+.loan-card-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px}
+.loan-spine{width:38px;height:50px;border-radius:5px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:12px;color:#fff;font-weight:600}
+.loan-info{flex:1;min-width:0}
+.loan-title{font-size:14px;font-weight:500;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.loan-author{font-size:12px;color:var(--text-muted)}
+.loan-meta{display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid var(--cream-dark);font-size:12px;color:var(--text-muted)}
+.loan-actions{display:flex;gap:8px;margin-top:10px}
+
+/* ── Admin Page ───────────────────────────────────────── */
+.admin-lock{
+  text-align:center;padding:48px 20px;
+  max-width:360px;margin:0 auto;
+}
+.admin-lock-icon{font-size:48px;margin-bottom:16px}
+.admin-lock h2{font-family:'Playfair Display',serif;font-size:22px;font-weight:400;margin-bottom:8px}
+.admin-lock p{font-size:13px;color:var(--text-muted);margin-bottom:24px}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+.stat-box{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:16px;text-align:center;
+}
+.stat-num{font-size:28px;font-weight:500;color:var(--navy);font-family:'Playfair Display',serif}
+.stat-lbl{font-size:11px;color:var(--text-light);text-transform:uppercase;letter-spacing:0.5px;margin-top:2px}
+.section-card{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--radius-lg);margin-bottom:16px;overflow:hidden;
+}
+.section-card-head{
+  padding:14px 16px;border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  background:var(--cream);
+}
+.section-card-head h3{font-size:14px;font-weight:500}
+.section-card-body{padding:16px}
+.admin-loan-row{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 0;border-bottom:1px solid var(--cream-dark);
+}
+.admin-loan-row:last-child{border-bottom:none}
+.admin-loan-info{flex:1;min-width:0}
+.admin-loan-name{font-size:13px;font-weight:500}
+.admin-loan-book{font-size:12px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.admin-loan-due{font-size:12px;color:var(--text-muted);white-space:nowrap;flex-shrink:0}
+.book-manage-row{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 0;border-bottom:1px solid var(--cream-dark);
+}
+.book-manage-row:last-child{border-bottom:none}
+.book-manage-spine{width:32px;height:42px;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;font-family:'Playfair Display',serif;font-weight:600}
+.book-manage-info{flex:1;min-width:0}
+.book-manage-title{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.book-manage-meta{font-size:11px;color:var(--text-muted)}
+.delete-btn{background:none;border:none;cursor:pointer;color:var(--text-light);font-size:18px;padding:4px;border-radius:6px;flex-shrink:0}
+.delete-btn:hover{color:var(--red);background:var(--red-bg)}
+
+/* ── About Page ───────────────────────────────────────── */
+.about-hero{
+  background:var(--navy);color:var(--white);
+  border-radius:var(--radius-lg);padding:28px 24px;
+  margin-bottom:16px;text-align:center;
+}
+.about-hero h2{font-family:'Playfair Display',serif;font-size:24px;font-weight:400;margin-bottom:8px}
+.about-hero p{font-size:14px;color:rgba(255,255,255,0.65);max-width:400px;margin:0 auto}
+.info-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;margin-bottom:12px}
+.info-card h3{font-size:15px;font-weight:500;margin-bottom:10px;color:var(--navy)}
+.info-row{display:flex;gap:8px;margin-bottom:8px;font-size:14px;align-items:flex-start}
+.info-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.rules-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.rules-list li{display:flex;gap:10px;font-size:14px;align-items:flex-start}
+.rule-num{width:22px;height:22px;background:var(--gold-light);color:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;margin-top:1px}
+
+/* ── Duration Selector ────────────────────────────────── */
+.duration-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:6px}
+.dur-btn{
+  padding:10px 4px;border:1px solid var(--border);border-radius:var(--radius);
+  background:var(--white);cursor:pointer;text-align:center;
+  transition:all .15s;
+}
+.dur-btn .dur-weeks{font-size:16px;font-weight:500;color:var(--text);display:block}
+.dur-btn .dur-label{font-size:11px;color:var(--text-muted);display:block}
+.dur-btn.selected{border-color:var(--navy);background:#e8f0fe}
+.dur-btn.selected .dur-weeks{color:var(--navy)}
+.dur-btn.selected .dur-label{color:var(--navy-light)}
+
+/* ── Responsive ───────────────────────────────────────── */
+@media(max-width:480px){
+  .hero-stats{gap:16px}
+  .header-title{font-size:16px}
+  .stats-grid{grid-template-columns:repeat(3,1fr);gap:8px}
+  .stat-num{font-size:22px}
+  .duration-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(min-width:700px){
+  .books-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .book-card{flex-direction:column}
+  .book-spine{width:100%;height:80px;font-size:16px;align-items:center;justify-content:center}
+  .status-badge{margin-left:0}
+  .book-footer{justify-content:space-between}
+}
+
+/* ── Confirm dialog ───────────────────────────────────── */
+.confirm-wrap{position:fixed;inset:0;background:rgba(10,20,40,0.55);z-index:150;display:flex;align-items:center;justify-content:center;display:none}
+.confirm-wrap.open{display:flex}
+.confirm-box{background:var(--white);border-radius:var(--radius-lg);padding:24px;width:90%;max-width:360px;box-shadow:var(--shadow-lg)}
+.confirm-box h3{font-size:17px;font-weight:500;margin-bottom:8px}
+.confirm-box p{font-size:14px;color:var(--text-muted);margin-bottom:20px}
+.confirm-btns{display:flex;gap:10px}
+.confirm-btns button{flex:1;padding:11px;border-radius:var(--radius);font-size:14px;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500}
+.confirm-cancel{background:var(--cream);color:var(--text);border:1px solid var(--border)}
+.confirm-ok{background:var(--red);color:#fff;border:none}
+
+/* ── PIN input style ──────────────────────────────────── */
+.pin-input{letter-spacing:8px;font-size:20px;text-align:center;max-width:160px;margin:0 auto 16px;display:block}
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══════════════════════════════════════════ -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="header-logo">L</div>
+      <div>
+        <div class="header-title">Life Sciences Library</div>
+        <div class="header-sub">Accenture · Floor Library</div>
+      </div>
+    </div>
+    <div class="header-badge" id="header-avail-badge">— available</div>
+  </div>
+</header>
+
+<!-- ══ NAV ════════════════════════════════════════════ -->
+<nav class="nav-wrap">
+  <div class="nav-inner">
+    <button class="nav-tab active" onclick="switchPage('browse')" id="tab-browse">
+      <span class="tab-icon">📚</span><span>Browse</span>
+    </button>
+    <button class="nav-tab" onclick="switchPage('loans')" id="tab-loans">
+      <span class="tab-icon">🔖</span><span>My Loans</span>
+      <span class="tab-badge" id="overdue-badge">!</span>
+    </button>
+    <button class="nav-tab" onclick="switchPage('admin')" id="tab-admin">
+      <span class="tab-icon">⚙️</span><span>Admin</span>
+    </button>
+    <button class="nav-tab" onclick="switchPage('about')" id="tab-about">
+      <span class="tab-icon">ℹ️</span><span>Info</span>
+    </button>
+  </div>
+</nav>
+
+<!-- ══ PAGES ══════════════════════════════════════════ -->
+
+<!-- BROWSE PAGE -->
+<div class="page active" id="page-browse">
+  <div class="container">
+    <div class="hero">
+      <h2>Borrow a book today</h2>
+      <p>Tap any available title to check it out — it only takes 30 seconds.</p>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="num" id="stat-avail">–</div><div class="lbl">Available</div></div>
+        <div class="hero-stat"><div class="num" id="stat-borrowed">–</div><div class="lbl">On loan</div></div>
+        <div class="hero-stat"><div class="num" id="stat-total-browse">–</div><div class="lbl">Total books</div></div>
+      </div>
+    </div>
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search-input" placeholder="Search by title, author or category…" oninput="renderBooks()">
+    </div>
+    <div class="filter-row">
+      <button class="filter-chip active" data-filter="all" onclick="setFilter(this)">All</button>
+      <button class="filter-chip" data-filter="available" onclick="setFilter(this)">Available</button>
+      <button class="filter-chip" data-filter="out" onclick="setFilter(this)">Checked out</button>
+    </div>
+    <div class="books-grid" id="books-grid"></div>
+  </div>
+</div>
+
+<!-- MY LOANS PAGE -->
+<div class="page" id="page-loans">
+  <div class="container">
+    <div class="lookup-card">
+      <h2>Your Active Loans</h2>
+      <p>Enter your name to see your current loans and return books.</p>
+      <div style="display:flex;gap:8px;max-width:400px;margin:0 auto">
+        <input type="text" class="form-input" id="lookup-name" placeholder="Your full name…" style="flex:1" onkeydown="if(event.key==='Enter')lookupLoans()">
+        <button class="btn-primary btn-sm" onclick="lookupLoans()" style="width:auto;padding:11px 20px">Search</button>
+      </div>
+    </div>
+    <div id="loans-results"></div>
+  </div>
+</div>
+
+<!-- ADMIN PAGE -->
+<div class="page" id="page-admin">
+  <div class="container">
+    <!-- Locked state -->
+    <div id="admin-locked">
+      <div class="admin-lock">
+        <div class="admin-lock-icon">🔒</div>
+        <h2>Admin Access</h2>
+        <p>Enter the admin PIN to manage books, view all loans, and access library settings.</p>
+        <input type="password" class="form-input pin-input" id="admin-pin" placeholder="••••" maxlength="4" onkeydown="if(event.key==='Enter')unlockAdmin()">
+        <button class="btn-primary" onclick="unlockAdmin()" style="max-width:200px;margin:0 auto">Unlock</button>
+        <p style="font-size:12px;color:var(--text-light);margin-top:16px">Default PIN: 1234 — change this in Settings below once unlocked</p>
+      </div>
+    </div>
+    <!-- Unlocked state -->
+    <div id="admin-panel" style="display:none">
+      <div class="stats-grid">
+        <div class="stat-box"><div class="stat-num" id="a-stat-total">0</div><div class="stat-lbl">Total books</div></div>
+        <div class="stat-box"><div class="stat-num" id="a-stat-out">0</div><div class="stat-lbl">On loan</div></div>
+        <div class="stat-box"><div class="stat-num" id="a-stat-overdue" style="color:var(--red)">0</div><div class="stat-lbl">Overdue</div></div>
+      </div>
+
+      <!-- Active loans -->
+      <div class="section-card">
+        <div class="section-card-head">
+          <h3>Active loans</h3>
+          <span id="a-loan-count" style="font-size:12px;color:var(--text-muted)"></span>
+        </div>
+        <div class="section-card-body" id="admin-loans-list"></div>
+      </div>
+
+      <!-- Loan history -->
+      <div class="section-card">
+        <div class="section-card-head">
+          <h3>Loan history</h3>
+          <span id="a-history-count" style="font-size:12px;color:var(--text-muted)"></span>
+        </div>
+        <div class="section-card-body" id="admin-history-list"></div>
+      </div>
+
+      <!-- Manage books -->
+      <div class="section-card">
+        <div class="section-card-head">
+          <h3>Manage books</h3>
+        </div>
+        <div class="section-card-body">
+          <div id="admin-books-list"></div>
+          <div style="border-top:1px solid var(--cream-dark);padding-top:14px;margin-top:4px">
+            <p style="font-size:13px;font-weight:500;margin-bottom:12px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px">Add new book</p>
+            <div class="form-group"><input class="form-input" id="add-title" placeholder="Book title *"></div>
+            <div class="form-group"><input class="form-input" id="add-author" placeholder="Author name *"></div>
+            <div class="form-group"><input class="form-input" id="add-category" placeholder="Category (e.g. Life Sciences, Strategy)"></div>
+            <div class="form-group"><input class="form-input" id="add-isbn" placeholder="ISBN or description (optional)"></div>
+            <button class="btn-primary" onclick="addBook()">Add book to library</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Settings -->
+      <div class="section-card">
+        <div class="section-card-head"><h3>Settings</h3></div>
+        <div class="section-card-body">
+          <div class="form-group">
+            <label class="form-label">Library display name</label>
+            <input class="form-input" id="setting-libname" value="Life Sciences Library">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Floor / location info</label>
+            <input class="form-input" id="setting-location" value="Accenture · Floor Library">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Change admin PIN</label>
+            <input class="form-input" id="setting-pin" placeholder="Enter new 4-digit PIN" maxlength="4" style="max-width:200px">
+          </div>
+          <button class="btn-primary" onclick="saveSettings()">Save settings</button>
+          <button class="btn-secondary" onclick="lockAdmin()" style="color:var(--red);border-color:var(--red);margin-top:10px">Lock admin panel</button>
+          <hr style="border:none;border-top:1px solid var(--cream-dark);margin:16px 0">
+          <p style="font-size:13px;color:var(--text-muted);margin-bottom:10px">Danger zone</p>
+          <button class="btn-danger" onclick="confirmClearHistory()">Clear all loan history</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INFO / ABOUT PAGE -->
+<div class="page" id="page-about">
+  <div class="container">
+    <div class="about-hero">
+      <h2>About this library</h2>
+      <p>A shared reading resource for the Accenture Life Sciences practice team.</p>
+    </div>
+    <div class="info-card">
+      <h3>How to borrow a book</h3>
+      <ul class="rules-list">
+        <li><span class="rule-num">1</span><span>Scan the QR code at the bookshelf, or visit this page directly.</span></li>
+        <li><span class="rule-num">2</span><span>Browse available books and tap the one you'd like to borrow.</span></li>
+        <li><span class="rule-num">3</span><span>Enter your name, email and choose a return date (up to 4 weeks).</span></li>
+        <li><span class="rule-num">4</span><span>Take the book from the shelf — you're all set!</span></li>
+        <li><span class="rule-num">5</span><span>To return, come back here, go to <strong>My Loans</strong>, search your name and tap <em>Return</em>.</span></li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h3>Borrowing guidelines</h3>
+      <div class="info-row"><span class="info-icon">📅</span><span>Maximum loan period is <strong>4 weeks</strong>. Please return on time so others can borrow.</span></div>
+      <div class="info-row"><span class="info-icon">🔄</span><span>You can renew a book once for another 2 weeks by returning it in <strong>My Loans</strong> and re-borrowing.</span></div>
+      <div class="info-row"><span class="info-icon">📖</span><span>Please take good care of all books — they're a shared resource for the whole team.</span></div>
+      <div class="info-row"><span class="info-icon">➕</span><span>Have a book to donate? Let Shane or Timmy know and it can be added to the catalogue.</span></div>
+    </div>
+    <div class="info-card">
+      <h3>Library contacts</h3>
+      <div class="info-row"><span class="info-icon">👤</span><span><strong>Shane</strong> — Life Sciences practice, library curator</span></div>
+      <div class="info-row"><span class="info-icon">👤</span><span><strong>Timmy</strong> — Library system administrator</span></div>
+      <div class="info-row"><span class="info-icon">👤</span><span><strong>Pierre</strong> — Director, Life Sciences</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CHECKOUT MODAL ════════════════════════════════ -->
+<div class="modal-overlay" id="checkout-modal">
+  <div class="modal" style="position:relative">
+    <div class="modal-handle"></div>
+    <div class="modal-head">
+      <h3 id="co-book-title">Book Title</h3>
+      <div class="sub" id="co-book-author">Author · Category</div>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Your full name</label>
+        <input class="form-input" type="text" id="co-name" placeholder="e.g. Timmy O'Brien" autocomplete="name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Your email</label>
+        <input class="form-input" type="email" id="co-email" placeholder="yourname@accenture.com" autocomplete="email">
+        <div class="form-hint">Used for your loan record only</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Return in</label>
+        <div class="duration-grid">
+          <button class="dur-btn" data-days="7" onclick="selectDur(this)"><span class="dur-weeks">1</span><span class="dur-label">week</span></button>
+          <button class="dur-btn selected" data-days="14" onclick="selectDur(this)"><span class="dur-weeks">2</span><span class="dur-label">weeks</span></button>
+          <button class="dur-btn" data-days="21" onclick="selectDur(this)"><span class="dur-weeks">3</span><span class="dur-label">weeks</span></button>
+          <button class="dur-btn" data-days="28" onclick="selectDur(this)"><span class="dur-weeks">4</span><span class="dur-label">weeks</span></button>
+        </div>
+        <div class="form-hint" id="co-due-hint">Due back: —</div>
+      </div>
+      <button class="btn-primary" id="co-submit-btn" onclick="confirmCheckout()">Confirm checkout</button>
+      <button class="btn-secondary" onclick="closeCheckout()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CONFIRM DIALOG ════════════════════════════════ -->
+<div class="confirm-wrap" id="confirm-dialog">
+  <div class="confirm-box">
+    <h3 id="confirm-title">Are you sure?</h3>
+    <p id="confirm-msg">This action cannot be undone.</p>
+    <div class="confirm-btns">
+      <button class="confirm-cancel" onclick="closeConfirm()">Cancel</button>
+      <button class="confirm-ok" id="confirm-ok-btn" onclick="confirmAction()">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TOAST CONTAINER ═══════════════════════════════ -->
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<!-- ══ JAVASCRIPT ═════════════════════════════════════ -->
+<script>
+// ── Storage keys ──────────────────────────────────────
+const K_BOOKS   = 'lib_books_v2';
+const K_LOANS   = 'lib_loans_v2';
+const K_HISTORY = 'lib_history_v2';
+const K_SETTINGS= 'lib_settings_v2';
+const K_PIN     = 'lib_pin_v2';
+
+// ── State ──────────────────────────────────────────────
+let books    = [];
+let loans    = [];
+let history  = [];
+let settings = { libname:'Life Sciences Library', location:'Accenture · Floor Library' };
+let adminPin = '1234';
+let adminUnlocked = false;
+let selectedBookId = null;
+let selectedDays   = 14;
+let currentFilter  = 'all';
+let pendingConfirmFn = null;
+
+// ── Colour palette ─────────────────────────────────────
+const SPINE_COLORS = [
+  '#0f2342','#1a6b42','#7b2d8b','#b86a1a',
+  '#155e75','#713f12','#881337','#1e5f3a',
+  '#2d3a8c','#6b3a1a','#1a4a6b','#6b1a42'
+];
+
+// ── localStorage helpers ───────────────────────────────
+function load(key, fallback){
+  try{ const v=localStorage.getItem(key); return v?JSON.parse(v):fallback; }
+  catch(e){ return fallback; }
+}
+function save(key, val){ try{ localStorage.setItem(key, JSON.stringify(val)); }catch(e){} }
+
+// ── Initialise ─────────────────────────────────────────
+function init(){
+  books    = load(K_BOOKS, defaultBooks());
+  loans    = load(K_LOANS, []);
+  history  = load(K_HISTORY, []);
+  settings = load(K_SETTINGS, settings);
+  adminPin = load(K_PIN, '1234');
+  applySettings();
+  renderBooks();
+  updateHeaderBadge();
+  checkOverdueBadge();
+}
+
+function defaultBooks(){
+  return [
+    {id:1, title:"The Innovator's Dilemma",    author:'Clayton Christensen',  cat:'Strategy',      color:SPINE_COLORS[0]},
+    {id:2, title:'Bad Blood',                   author:'John Carreyrou',       cat:'Life Sciences', color:SPINE_COLORS[1]},
+    {id:3, title:'The Emperor of All Maladies', author:'Siddhartha Mukherjee', cat:'Life Sciences', color:SPINE_COLORS[2]},
+    {id:4, title:'Thinking, Fast and Slow',     author:'Daniel Kahneman',      cat:'Behavioural',   color:SPINE_COLORS[3]},
+    {id:5, title:'Good Strategy Bad Strategy',  author:'Richard Rumelt',       cat:'Strategy',      color:SPINE_COLORS[4]},
+    {id:6, title:'The Gene',                    author:'Siddhartha Mukherjee', cat:'Life Sciences', color:SPINE_COLORS[5]},
+    {id:7, title:'Regenesis',                   author:'George Church',        cat:'Life Sciences', color:SPINE_COLORS[6]},
+    {id:8, title:'Zero to One',                 author:'Peter Thiel',          cat:'Strategy',      color:SPINE_COLORS[7]},
+  ];
+}
+
+// ── Helpers ────────────────────────────────────────────
+function getActiveLoan(bookId){ return loans.find(l=>l.bookId===bookId); }
+function isOverdue(loan){ return new Date() > new Date(loan.dueDate); }
+function fmtDate(iso){
+  return new Date(iso).toLocaleDateString('en-IE',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+}
+function fmtShort(iso){
+  return new Date(iso).toLocaleDateString('en-IE',{day:'numeric',month:'short'});
+}
+function initials(title){
+  return title.split(' ').filter(w=>w.length>2).slice(0,2).map(w=>w[0].toUpperCase()).join('') || title.slice(0,2).toUpperCase();
+}
+
+// ── Page switching ─────────────────────────────────────
+function switchPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+  if(name==='admin') renderAdminPanel();
+}
+
+// ── Book rendering ─────────────────────────────────────
+function renderBooks(){
+  const q     = document.getElementById('search-input').value.toLowerCase();
+  const filter= currentFilter;
+  const grid  = document.getElementById('books-grid');
+
+  let visible = books.filter(b=>{
+    const loan    = getActiveLoan(b.id);
+    const avail   = !loan;
+    if(filter==='available' && !avail) return false;
+    if(filter==='out'       &&  avail) return false;
+    if(q && !b.title.toLowerCase().includes(q)
+         && !b.author.toLowerCase().includes(q)
+         && !b.cat.toLowerCase().includes(q)) return false;
+    return true;
+  });
+
+  // hero stats
+  const totalOut  = loans.length;
+  const totalAvail= books.length - totalOut;
+  document.getElementById('stat-avail').textContent        = totalAvail;
+  document.getElementById('stat-borrowed').textContent     = totalOut;
+  document.getElementById('stat-total-browse').textContent = books.length;
+  document.getElementById('header-avail-badge').textContent= totalAvail+' available';
+
+  if(!visible.length){
+    grid.innerHTML=`<div class="empty"><div class="empty-icon">📭</div><h3>No books found</h3><p>Try a different search or filter.</p></div>`;
+    return;
+  }
+
+  grid.innerHTML = visible.map(b=>{
+    const loan   = getActiveLoan(b.id);
+    const avail  = !loan;
+    const over   = loan && isOverdue(loan);
+    const statusClass= avail?'available': over?'overdue':'out';
+    const statusText = avail?'Available':  over?'Overdue':'Out';
+    const dueRow = loan ? `<div class="due-info">Borrowed by ${loan.borrower} · Due ${fmtShort(loan.dueDate)}</div>` : '';
+    return `
+    <div class="book-card${avail?'':' unavailable'}" onclick="${avail?`openCheckout(${b.id})`:''}">
+      <div class="book-spine" style="background:${b.color}">${initials(b.title)}</div>
+      <div class="book-body">
+        <div class="book-title">${b.title}</div>
+        <div class="book-author">${b.author}</div>
+        <div class="book-footer">
+          <span class="cat-tag">${b.cat}</span>
+          <span class="status-badge ${statusClass}">${statusText}</span>
+          ${dueRow}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function setFilter(btn){
+  currentFilter = btn.dataset.filter;
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  renderBooks();
+}
+
+// ── Checkout flow ──────────────────────────────────────
+function openCheckout(bookId){
+  const b = books.find(x=>x.id===bookId);
+  if(!b) return;
+  selectedBookId = bookId;
+  selectedDays   = 14;
+  document.getElementById('co-book-title').textContent  = b.title;
+  document.getElementById('co-book-author').textContent = `${b.author} · ${b.cat}`;
+  document.getElementById('co-name').value  = '';
+  document.getElementById('co-email').value = '';
+  document.querySelectorAll('.dur-btn').forEach(d=>d.classList.toggle('selected', +d.dataset.days===14));
+  updateDueHint();
+  document.getElementById('checkout-modal').classList.add('open');
+  setTimeout(()=>document.getElementById('co-name').focus(),300);
+}
+function closeCheckout(){
+  document.getElementById('checkout-modal').classList.remove('open');
+}
+function selectDur(btn){
+  document.querySelectorAll('.dur-btn').forEach(d=>d.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedDays = +btn.dataset.days;
+  updateDueHint();
+}
+function updateDueHint(){
+  const due = new Date();
+  due.setDate(due.getDate()+selectedDays);
+  document.getElementById('co-due-hint').textContent = 'Due back: '+fmtDate(due.toISOString());
+}
+function confirmCheckout(){
+  const name  = document.getElementById('co-name').value.trim();
+  const email = document.getElementById('co-email').value.trim();
+  if(!name){ showToast('Please enter your name','error'); return; }
+  if(!email||!email.includes('@')){ showToast('Please enter a valid email','error'); return; }
+  const b = books.find(x=>x.id===selectedBookId);
+  if(!b) return;
+  const due = new Date();
+  due.setDate(due.getDate()+selectedDays);
+  const loan = {
+    id:       Date.now(),
+    bookId:   selectedBookId,
+    bookTitle:b.title,
+    borrower: name,
+    email:    email,
+    borrowDate: new Date().toISOString(),
+    dueDate:    due.toISOString(),
+    days:       selectedDays,
+  };
+  loans.push(loan);
+  save(K_LOANS, loans);
+  closeCheckout();
+  renderBooks();
+  updateHeaderBadge();
+  checkOverdueBadge();
+  showToast(`✓ "${b.title}" checked out to ${name}. Due ${fmtShort(due.toISOString())}`, 'success');
+}
+
+// ── My Loans ────────────────────────────────────────────
+function lookupLoans(){
+  const q = document.getElementById('lookup-name').value.trim().toLowerCase();
+  const el= document.getElementById('loans-results');
+  if(!q){ el.innerHTML=''; return; }
+  const myLoans = loans.filter(l=>l.borrower.toLowerCase().includes(q));
+  if(!myLoans.length){
+    el.innerHTML=`<div class="empty"><div class="empty-icon">🔍</div><h3>No active loans found</h3><p>No loans found for "${q}". Check the spelling of your name.</p></div>`;
+    return;
+  }
+  const overdue = myLoans.filter(l=>isOverdue(l));
+  let html='';
+  if(overdue.length){
+    html+=`<div class="alert danger">⚠️ You have ${overdue.length} overdue book${overdue.length>1?'s':''}. Please return ${overdue.length>1?'them':'it'} as soon as possible.</div>`;
+  }
+  myLoans.forEach(l=>{
+    const b    = books.find(x=>x.id===l.bookId)||{color:SPINE_COLORS[0]};
+    const over = isOverdue(l);
+    html+=`
+    <div class="loan-card">
+      <div class="loan-card-head">
+        <div class="loan-spine" style="background:${b.color}">${initials(l.bookTitle)}</div>
+        <div class="loan-info">
+          <div class="loan-title">${l.bookTitle}</div>
+          <div class="loan-author" style="font-size:12px;color:var(--text-muted)">${l.borrower} · ${l.email}</div>
+        </div>
+        <span class="status-badge ${over?'overdue':'available'}" style="flex-shrink:0">${over?'Overdue':'Active'}</span>
+      </div>
+      <div class="loan-meta">
+        <span>Borrowed: ${fmtShort(l.borrowDate)}</span>
+        <span style="color:${over?'var(--red)':'inherit'}">Due: ${fmtDate(l.dueDate)}</span>
+      </div>
+      <div class="loan-actions">
+        <button class="btn-primary btn-sm" onclick="returnBook(${l.id},'${q}')">Return book</button>
+      </div>
+    </div>`;
+  });
+  el.innerHTML=html;
+}
+
+function returnBook(loanId, query){
+  const idx = loans.findIndex(l=>l.id===loanId);
+  if(idx===-1) return;
+  const loan = loans[idx];
+  // move to history
+  history.unshift({ ...loan, returnDate: new Date().toISOString() });
+  loans.splice(idx,1);
+  save(K_LOANS, loans);
+  save(K_HISTORY, history);
+  renderBooks();
+  updateHeaderBadge();
+  checkOverdueBadge();
+  showToast(`✓ "${loan.bookTitle}" returned. Thanks!`, 'success');
+  // refresh loan results
+  setTimeout(()=>lookupLoans(), 300);
+}
+
+// ── Admin Panel ─────────────────────────────────────────
+function unlockAdmin(){
+  const pin = document.getElementById('admin-pin').value;
+  if(pin===adminPin){
+    adminUnlocked=true;
+    document.getElementById('admin-locked').style.display='none';
+    document.getElementById('admin-panel').style.display='block';
+    renderAdminPanel();
+  } else {
+    const inp=document.getElementById('admin-pin');
+    inp.style.borderColor='var(--red)';
+    inp.style.boxShadow='0 0 0 3px rgba(176,40,40,0.15)';
+    setTimeout(()=>{inp.style.borderColor='';inp.style.boxShadow='';},1200);
+    showToast('Incorrect PIN','error');
+  }
+}
+function lockAdmin(){
+  adminUnlocked=false;
+  document.getElementById('admin-locked').style.display='block';
+  document.getElementById('admin-panel').style.display='none';
+  document.getElementById('admin-pin').value='';
+}
+
+function renderAdminPanel(){
+  if(!adminUnlocked) return;
+  const over = loans.filter(l=>isOverdue(l));
+  document.getElementById('a-stat-total').textContent   = books.length;
+  document.getElementById('a-stat-out').textContent     = loans.length;
+  document.getElementById('a-stat-overdue').textContent = over.length;
+
+  // Active loans
+  const loanEl = document.getElementById('admin-loans-list');
+  document.getElementById('a-loan-count').textContent = loans.length ? `${loans.length} active` : '';
+  if(!loans.length){
+    loanEl.innerHTML='<div style="text-align:center;padding:20px;color:var(--text-muted);font-size:14px">No active loans</div>';
+  } else {
+    loanEl.innerHTML = loans.map(l=>{
+      const isOvr = isOverdue(l);
+      return `
+      <div class="admin-loan-row">
+        <div class="admin-loan-info">
+          <div class="admin-loan-name">${l.borrower} <span style="font-weight:400;color:var(--text-muted)">· ${l.email}</span></div>
+          <div class="admin-loan-book">${l.bookTitle}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+          <div class="admin-loan-due">Due ${fmtShort(l.dueDate)}</div>
+          <span class="status-badge ${isOvr?'overdue':'available'}" style="font-size:10px">${isOvr?'Overdue':'Active'}</span>
+        </div>
+        <button class="btn-primary btn-sm" onclick="adminReturn(${l.id})" style="flex-shrink:0">Return</button>
+      </div>`;
+    }).join('');
+  }
+
+  // Loan history
+  const histEl = document.getElementById('admin-history-list');
+  document.getElementById('a-history-count').textContent = history.length ? `${history.length} records` : '';
+  if(!history.length){
+    histEl.innerHTML='<div style="text-align:center;padding:20px;color:var(--text-muted);font-size:14px">No history yet</div>';
+  } else {
+    histEl.innerHTML = history.slice(0,20).map(h=>`
+      <div class="admin-loan-row">
+        <div class="admin-loan-info">
+          <div class="admin-loan-name">${h.borrower}</div>
+          <div class="admin-loan-book">${h.bookTitle}</div>
+        </div>
+        <div style="text-align:right">
+          <div class="admin-loan-due">${fmtShort(h.borrowDate)} → ${fmtShort(h.returnDate)}</div>
+        </div>
+      </div>`).join('');
+    if(history.length>20) histEl.innerHTML+=`<p style="text-align:center;font-size:12px;color:var(--text-muted);padding:8px 0">Showing latest 20 of ${history.length}</p>`;
+  }
+
+  // Books list
+  const booksEl = document.getElementById('admin-books-list');
+  booksEl.innerHTML = books.map(b=>{
+    const loan = getActiveLoan(b.id);
+    return `
+    <div class="book-manage-row">
+      <div class="book-manage-spine" style="background:${b.color}">${initials(b.title)}</div>
+      <div class="book-manage-info">
+        <div class="book-manage-title">${b.title}</div>
+        <div class="book-manage-meta">${b.author} · ${b.cat}${loan?' · <span style="color:var(--red)">On loan</span>':''}</div>
+      </div>
+      <button class="delete-btn" onclick="deleteBook(${b.id})" title="Remove book">✕</button>
+    </div>`;
+  }).join('');
+
+  // Settings
+  document.getElementById('setting-libname').value  = settings.libname;
+  document.getElementById('setting-location').value = settings.location;
+}
+
+function adminReturn(loanId){
+  const idx = loans.findIndex(l=>l.id===loanId);
+  if(idx===-1) return;
+  const loan=loans[idx];
+  history.unshift({...loan, returnDate:new Date().toISOString()});
+  loans.splice(idx,1);
+  save(K_LOANS, loans);
+  save(K_HISTORY, history);
+  renderBooks();
+  updateHeaderBadge();
+  checkOverdueBadge();
+  renderAdminPanel();
+  showToast(`✓ "${loan.bookTitle}" marked as returned`,'success');
+}
+
+function addBook(){
+  const title  = document.getElementById('add-title').value.trim();
+  const author = document.getElementById('add-author').value.trim();
+  const cat    = document.getElementById('add-category').value.trim() || 'General';
+  if(!title||!author){ showToast('Please enter at least title and author','error'); return; }
+  const newId  = books.length ? Math.max(...books.map(b=>b.id))+1 : 1;
+  books.push({ id:newId, title, author, cat, color:SPINE_COLORS[newId%SPINE_COLORS.length] });
+  save(K_BOOKS, books);
+  document.getElementById('add-title').value='';
+  document.getElementById('add-author').value='';
+  document.getElementById('add-category').value='';
+  document.getElementById('add-isbn').value='';
+  renderBooks();
+  renderAdminPanel();
+  showToast(`✓ "${title}" added to the library`,'success');
+}
+
+function deleteBook(bookId){
+  const b = books.find(x=>x.id===bookId);
+  if(!b) return;
+  if(getActiveLoan(bookId)){
+    showToast('Cannot remove a book that is currently on loan','error');
+    return;
+  }
+  showConfirm(`Remove "${b.title}"?`, 'This will permanently remove the book from the catalogue.', ()=>{
+    books = books.filter(x=>x.id!==bookId);
+    save(K_BOOKS, books);
+    renderBooks();
+    renderAdminPanel();
+    showToast(`"${b.title}" removed`);
+  });
+}
+
+function saveSettings(){
+  settings.libname  = document.getElementById('setting-libname').value.trim() || settings.libname;
+  settings.location = document.getElementById('setting-location').value.trim() || settings.location;
+  const newPin      = document.getElementById('setting-pin').value.trim();
+  if(newPin){ if(newPin.length===4 && /^\d+$/.test(newPin)){ adminPin=newPin; save(K_PIN,adminPin); } else { showToast('PIN must be exactly 4 digits','error'); return; } }
+  save(K_SETTINGS, settings);
+  applySettings();
+  showToast('Settings saved ✓','success');
+}
+
+function applySettings(){
+  document.title = settings.libname + ' · Accenture';
+  document.querySelector('.header-title').textContent = settings.libname;
+  document.querySelector('.header-sub').textContent   = settings.location;
+}
+
+function confirmClearHistory(){
+  showConfirm('Clear all loan history?','This permanently deletes all past loan records. Active loans are not affected.',()=>{
+    history=[];
+    save(K_HISTORY, history);
+    renderAdminPanel();
+    showToast('Loan history cleared');
+  });
+}
+
+// ── UI helpers ─────────────────────────────────────────
+function updateHeaderBadge(){
+  const avail = books.length - loans.length;
+  document.getElementById('header-avail-badge').textContent = avail+' available';
+}
+
+function checkOverdueBadge(){
+  const over = loans.filter(l=>isOverdue(l));
+  const badge = document.getElementById('overdue-badge');
+  if(over.length){ badge.classList.add('show'); badge.textContent=over.length; }
+  else badge.classList.remove('show');
+}
+
+function showToast(msg, type=''){
+  const wrap = document.getElementById('toast-wrap');
+  const div  = document.createElement('div');
+  div.className = 'toast'+(type?' '+type:'');
+  div.textContent = msg;
+  wrap.appendChild(div);
+  setTimeout(()=>div.remove(), 3200);
+}
+
+function showConfirm(title, msg, fn){
+  pendingConfirmFn = fn;
+  document.getElementById('confirm-title').textContent = title;
+  document.getElementById('confirm-msg').textContent   = msg;
+  document.getElementById('confirm-dialog').classList.add('open');
+}
+function closeConfirm(){ document.getElementById('confirm-dialog').classList.remove('open'); }
+function confirmAction(){ closeConfirm(); if(pendingConfirmFn) pendingConfirmFn(); pendingConfirmFn=null; }
+
+// ── Close modal on overlay click ───────────────────────
+document.getElementById('checkout-modal').addEventListener('click', function(e){
+  if(e.target===this) closeCheckout();
+});
+document.getElementById('confirm-dialog').addEventListener('click', function(e){
+  if(e.target===this) closeConfirm();
+});
+
+// ── Kick off ───────────────────────────────────────────
+init();
+</script>
+</body>
+</html>

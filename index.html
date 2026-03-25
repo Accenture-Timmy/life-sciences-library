@@ -750,10 +750,10 @@ async function init(){
     showToast('Could not reach database — check connection','error');
   }
   applySettings();
+  showLoadingState(false);
   renderBooks();
   updateHeaderBadge();
   checkOverdueBadge();
-  showLoadingState(false);
   if(settings.ejsPubkey) emailjs.init(settings.ejsPubkey);
   setTimeout(runScheduledEmails, 1500);
 }

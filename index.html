@@ -720,7 +720,8 @@ let currentFilter  = 'all';
 let pendingConfirmFn = null;
 let sentLog        = {};
 let loading        = false;
-
+let adminPin = '1234';
+  
 // sentLog still uses localStorage — it's per-device by design (tracks which reminder emails this device already sent)
 const K_SENT = 'lib_sent_v3';
 

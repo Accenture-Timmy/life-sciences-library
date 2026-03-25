@@ -166,15 +166,17 @@ body{font-family:'DM Sans',sans-serif;background:#f8f7fc;color:#1a1a1a;min-heigh
 /* ── FAB ──────────────────────────────────────────────── */
 .fab{
   position:fixed;bottom:24px;right:20px;
-  width:52px;height:52px;border-radius:50%;
+  height:48px;padding:0 20px 0 14px;border-radius:24px;
   background:#a100ff;color:#fff;border:none;
-  font-size:26px;line-height:1;cursor:pointer;
+  font-size:15px;font-weight:600;font-family:'DM Sans',sans-serif;
+  letter-spacing:.01em;cursor:pointer;
   box-shadow:0 4px 16px rgba(161,0,255,0.38);
-  display:flex;align-items:center;justify-content:center;
+  display:flex;align-items:center;gap:8px;
   z-index:45;transition:background .15s,transform .1s;
 }
-.fab:hover{background:var(--navy-light);transform:scale(1.05)}
+.fab:hover{background:var(--navy-light);transform:scale(1.04)}
 .fab:active{transform:scale(0.97)}
+.fab-icon{font-size:22px;line-height:1;margin-top:-1px}
 
 /* ── Book Table ───────────────────────────────────────── */
 .books-table{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
@@ -708,7 +710,7 @@ body{font-family:'DM Sans',sans-serif;background:#f8f7fc;color:#1a1a1a;min-heigh
 </div>
 
 <!-- ══ FAB ════════════════════════════════════════════ -->
-<button class="fab" id="fab-add" onclick="openAddBook()" title="Add a book">+</button>
+<button class="fab" id="fab-add" onclick="openAddBook()" title="Add a book"><span class="fab-icon">+</span> Add Book</button>
 
 <!-- ══ TOAST CONTAINER ═══════════════════════════════ -->
 <div class="toast-wrap" id="toast-wrap"></div>

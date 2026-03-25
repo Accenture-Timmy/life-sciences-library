@@ -151,44 +151,67 @@ body{font-family:'DM Sans',sans-serif;background:#f8f7fc;color:#1a1a1a;min-heigh
 }
 .filter-chip:hover{border-color:var(--navy-light);color:var(--navy)}
 .filter-chip.active{background:#a100ff;color:var(--white);border-color:#a100ff}
+.filter-select{
+  padding:6px 28px 6px 12px;border:1px solid var(--border);
+  border-radius:20px;font-size:12px;font-weight:500;
+  background:var(--white);color:var(--text-muted);cursor:pointer;
+  font-family:'DM Sans',sans-serif;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%235a5a5a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;
+  -webkit-appearance:none;appearance:none;transition:all .15s;
+}
+.filter-select:focus{outline:none;border-color:var(--navy-light)}
+.filter-select.has-value{border-color:#a100ff;color:#a100ff;background-color:#f3e6ff}
 
-/* ── Book Cards ───────────────────────────────────────── */
-.books-grid{display:flex;flex-direction:column;gap:10px}
-.book-card{
-  background:var(--white);border:1px solid var(--border);
-  border-radius:var(--radius-lg);padding:16px;
-  display:flex;gap:14px;align-items:flex-start;
-  cursor:pointer;transition:all .15s;
-  position:relative;
-}
-.book-card:hover{border-color:#c340ff;box-shadow:var(--shadow)}
-.book-card.unavailable{cursor:default;opacity:0.75}
-.book-card.unavailable:hover{border-color:var(--border);box-shadow:none}
-.book-spine{
-  width:46px;height:62px;border-radius:6px;
+/* ── FAB ──────────────────────────────────────────────── */
+.fab{
+  position:fixed;bottom:24px;right:20px;
+  width:52px;height:52px;border-radius:50%;
+  background:#a100ff;color:#fff;border:none;
+  font-size:26px;line-height:1;cursor:pointer;
+  box-shadow:0 4px 16px rgba(161,0,255,0.38);
   display:flex;align-items:center;justify-content:center;
-  font-family:'Playfair Display',serif;font-size:14px;
-  color:var(--white);font-weight:600;flex-shrink:0;
-  letter-spacing:0.5px;
+  z-index:45;transition:background .15s,transform .1s;
 }
-.book-body{flex:1;min-width:0}
-.book-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:2px;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.book-author{font-size:13px;color:var(--text-muted);margin-bottom:6px}
-.book-footer{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.cat-tag{
-  font-size:11px;padding:3px 8px;border-radius:4px;
-  background:var(--cream-dark);color:var(--text-muted);
-  font-weight:500;
+.fab:hover{background:var(--navy-light);transform:scale(1.05)}
+.fab:active{transform:scale(0.97)}
+
+/* ── Book Table ───────────────────────────────────────── */
+.books-table{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
+.books-thead{
+  display:grid;grid-template-columns:1fr 150px 110px 90px;
+  padding:9px 16px;background:#faf7ff;
+  border-bottom:1px solid var(--border);
+  font-size:11px;font-weight:600;color:var(--text-muted);
+  text-transform:uppercase;letter-spacing:0.5px;gap:12px;
 }
+.book-row{
+  display:grid;grid-template-columns:1fr 150px 110px 90px;
+  padding:11px 16px;gap:12px;align-items:center;
+  border-bottom:1px solid var(--cream-dark);
+  cursor:pointer;transition:background .12s;
+}
+.book-row:last-child{border-bottom:none}
+.book-row:hover{background:#f8f4ff}
+.book-row.unavailable{cursor:default}
+.book-row.unavailable:hover{background:transparent}
+.book-row.pending-checkout{opacity:0.55;cursor:default;pointer-events:none}
+.book-row-title{font-size:14px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.book-row-author{font-size:13px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.book-row-cat{font-size:12px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .status-badge{
   font-size:11px;font-weight:600;padding:3px 9px;
-  border-radius:20px;margin-left:auto;flex-shrink:0;
+  border-radius:20px;white-space:nowrap;display:inline-block;
 }
 .status-badge.available{background:var(--green-bg);color:var(--green)}
 .status-badge.out{background:var(--red-bg);color:var(--red)}
 .status-badge.overdue{background:var(--orange-bg);color:var(--orange)}
-.due-info{font-size:11px;color:var(--text-light);width:100%}
+@media(max-width:560px){
+  .books-thead{grid-template-columns:1fr 80px}
+  .books-thead .col-author,.books-thead .col-cat{display:none}
+  .book-row{grid-template-columns:1fr 80px}
+  .book-row-author,.book-row-cat{display:none}
+}
 
 /* ── Empty State ──────────────────────────────────────── */
 .empty{text-align:center;padding:48px 20px;color:var(--text-muted)}
@@ -399,13 +422,6 @@ body{font-family:'DM Sans',sans-serif;background:#f8f7fc;color:#1a1a1a;min-heigh
   .stat-num{font-size:22px}
   .duration-grid{grid-template-columns:repeat(2,1fr)}
 }
-@media(min-width:700px){
-  .books-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .book-card{flex-direction:column}
-  .book-spine{width:100%;height:80px;font-size:16px;align-items:center;justify-content:center}
-  .status-badge{margin-left:0}
-  .book-footer{justify-content:space-between}
-}
 
 /* ── Confirm dialog ───────────────────────────────────── */
 .confirm-wrap{position:fixed;inset:0;background:rgba(10,20,40,0.55);z-index:150;display:flex;align-items:center;justify-content:center;display:none}
@@ -429,7 +445,7 @@ body{font-family:'DM Sans',sans-serif;background:#f8f7fc;color:#1a1a1a;min-heigh
   <div class="header-inner">
     <div class="header-brand">
       <div class="header-logo">
-        <span style="font-size:38px;font-weight:300;line-height:1;color:white;">&gt;</span>
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><polygon points="10,10 90,50 10,90" fill="white"/></svg>
       </div>
       <div>
         <div class="header-title">Life Sciences Library</div>
@@ -481,8 +497,11 @@ body{font-family:'DM Sans',sans-serif;background:#f8f7fc;color:#1a1a1a;min-heigh
       <button class="filter-chip active" data-filter="all" onclick="setFilter(this)">All</button>
       <button class="filter-chip" data-filter="available" onclick="setFilter(this)">Available</button>
       <button class="filter-chip" data-filter="out" onclick="setFilter(this)">Checked out</button>
+      <select class="filter-select" id="cat-select" onchange="setCatFilter()">
+        <option value="">All categories</option>
+      </select>
     </div>
-    <div class="books-grid" id="books-grid"></div>
+    <div id="books-grid"></div>
   </div>
 </div>
 
@@ -493,7 +512,7 @@ body{font-family:'DM Sans',sans-serif;background:#f8f7fc;color:#1a1a1a;min-heigh
       <h2>Your Active Loans</h2>
       <p>Enter your name to see your current loans and return books.</p>
       <div style="display:flex;gap:8px;max-width:400px;margin:0 auto">
-        <input type="text" class="form-input" id="lookup-name" placeholder="Your full name…" style="flex:1" onkeydown="if(event.key==='Enter')lookupLoans()">
+        <input type="text" class="form-input" id="lookup-name" placeholder="Your name or email…" style="flex:1" onkeydown="if(event.key==='Enter')lookupLoans()">
         <button class="btn-primary btn-sm" onclick="lookupLoans()" style="width:auto;padding:11px 20px">Search</button>
       </div>
     </div>
@@ -512,7 +531,6 @@ body{font-family:'DM Sans',sans-serif;background:#f8f7fc;color:#1a1a1a;min-heigh
         <p>Enter the admin PIN to manage books, view all loans, and access library settings.</p>
         <input type="password" class="form-input pin-input" id="admin-pin" placeholder="••••" maxlength="4" onkeydown="if(event.key==='Enter')unlockAdmin()">
         <button class="btn-primary" onclick="unlockAdmin()" style="max-width:200px;margin:0 auto">Unlock</button>
-        <p style="font-size:12px;color:var(--text-light);margin-top:16px">Default PIN: 1234 — change this in Settings below once unlocked</p>
       </div>
     </div>
     <!-- Unlocked state -->
@@ -576,33 +594,7 @@ body{font-family:'DM Sans',sans-serif;background:#f8f7fc;color:#1a1a1a;min-heigh
             <input class="form-input" id="setting-pin" placeholder="Enter new 4-digit PIN" maxlength="4" style="max-width:200px">
           </div>
 
-          <hr style="border:none;border-top:1px solid var(--cream-dark);margin:18px 0 16px">
-          <p style="font-size:14px;font-weight:500;margin-bottom:3px;color:var(--text)">📧 Email notifications</p>
-          <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px">Paste your EmailJS credentials here to activate automatic emails. Emails are sent at two points only: (1) immediately when a book is borrowed, and (2) one day before the due date. Overdue books are visible on the admin page for you to follow up directly.</p>
-          <div class="form-group">
-            <label class="form-label">EmailJS Public Key</label>
-            <input class="form-input" id="setting-ejs-pubkey" placeholder="e.g. aBcDeFgH1234567">
-          </div>
-          <div class="form-group">
-            <label class="form-label">EmailJS Service ID</label>
-            <input class="form-input" id="setting-ejs-service" placeholder="e.g. service_abc1234">
-          </div>
-          <div class="form-group">
-            <label class="form-label">EmailJS Template ID</label>
-            <input class="form-input" id="setting-ejs-template" placeholder="e.g. template_abc1234">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Your email address (admin 1 — Timmy)</label>
-            <input class="form-input" id="setting-admin1" placeholder="timmy@accenture.com" type="email">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Shane's email address (admin 2)</label>
-            <input class="form-input" id="setting-admin2" placeholder="shane@accenture.com" type="email">
-          </div>
-          <div id="email-config-status" style="display:none;font-size:13px;padding:10px 14px;border-radius:8px;margin-bottom:12px"></div>
-
-          <button class="btn-primary" onclick="saveSettings()">Save all settings</button>
-          <button class="btn-secondary" onclick="testEmail()" style="margin-top:10px">Send test email to my address</button>
+          <button class="btn-primary" onclick="saveSettings()">Save settings</button>
           <button class="btn-secondary" onclick="lockAdmin()" style="color:var(--red);border-color:var(--red);margin-top:10px">Lock admin panel</button>
           <hr style="border:none;border-top:1px solid var(--cream-dark);margin:16px 0">
           <p style="font-size:13px;color:var(--text-muted);margin-bottom:10px">Danger zone</p>
@@ -692,6 +684,36 @@ body{font-family:'DM Sans',sans-serif;background:#f8f7fc;color:#1a1a1a;min-heigh
   </div>
 </div>
 
+<!-- ══ ADD BOOK MODAL ═════════════════════════════════ -->
+<div class="modal-overlay" id="add-book-modal">
+  <div class="modal" style="position:relative">
+    <div class="modal-handle"></div>
+    <div class="modal-head">
+      <h3>Add a book</h3>
+      <div class="sub">Add a book to the library catalogue</div>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Book title *</label>
+        <input class="form-input" id="pub-add-title" placeholder="e.g. The Innovator's Dilemma" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Author *</label>
+        <input class="form-input" id="pub-add-author" placeholder="e.g. Clayton Christensen" autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Category</label>
+        <input class="form-input" id="pub-add-category" placeholder="e.g. Life Sciences, Strategy, Behavioural" autocomplete="off">
+      </div>
+      <button class="btn-primary" id="pub-add-btn" onclick="publicAddBook()">Add to library</button>
+      <button class="btn-secondary" onclick="closeAddBook()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FAB ════════════════════════════════════════════ -->
+<button class="fab" id="fab-add" onclick="openAddBook()" title="Add a book">+</button>
+
 <!-- ══ TOAST CONTAINER ═══════════════════════════════ -->
 <div class="toast-wrap" id="toast-wrap"></div>
 
@@ -709,21 +731,19 @@ function apiPost(body){
 }
 
 // ── State ──────────────────────────────────────────────
-let books          = [];
-let loans          = [];
-let history        = [];
-let settings       = { libname:'Life Sciences Library', location:'Accenture · Floor Library', adminPin:'1234', ejsPubkey:'', ejsService:'', ejsTemplate:'', admin1:'', admin2:'' };
-let adminUnlocked  = false;
-let selectedBookId = null;
-let selectedDays   = 14;
-let currentFilter  = 'all';
+let books            = [];
+let loans            = [];
+let history          = [];
+let settings         = { libname:'Life Sciences Library', location:'Accenture · Floor Library', adminPin:'1234' };
+let adminUnlocked    = false;
+let selectedBookId   = null;
+let selectedDays     = 14;
+let currentFilter    = 'all';
+let currentCatFilter = '';
+let pendingCheckouts = new Set();
 let pendingConfirmFn = null;
-let sentLog        = {};
-let loading        = false;
-let adminPin = '1234';
-  
-// sentLog still uses localStorage — it's per-device by design (tracks which reminder emails this device already sent)
-const K_SENT = 'lib_sent_v3';
+let loading          = false;
+
 
 // ── Colour palette ─────────────────────────────────────
 const SPINE_COLORS = [
@@ -751,12 +771,10 @@ async function init(){
     showToast('Could not reach database — check connection','error');
   }
   applySettings();
-  showLoadingState(false);
   renderBooks();
   updateHeaderBadge();
   checkOverdueBadge();
-  if(settings.ejsPubkey) emailjs.init(settings.ejsPubkey);
-  setTimeout(runScheduledEmails, 1500);
+  showLoadingState(false);
 }
 
 function normaliseBook(b){
@@ -811,47 +829,67 @@ function switchPage(name){
 // ── Book rendering ─────────────────────────────────────
 function renderBooks(){
   if(loading) return;
-  const q      = document.getElementById('search-input').value.toLowerCase();
-  const filter = currentFilter;
-  const grid   = document.getElementById('books-grid');
-  let visible  = books.filter(b=>{
+  const q    = document.getElementById('search-input').value.toLowerCase();
+  const grid = document.getElementById('books-grid');
+
+  // Populate / refresh category dropdown
+  const catSel = document.getElementById('cat-select');
+  if(catSel){
+    const cats = [...new Set(books.map(b=>b.cat))].sort();
+    catSel.innerHTML = '<option value="">All categories</option>'
+      + cats.map(c=>`<option value="${c}"${c===currentCatFilter?' selected':''}>${c}</option>`).join('');
+    catSel.className = 'filter-select' + (currentCatFilter?' has-value':'');
+  }
+
+  let visible = books.filter(b=>{
     const loan  = getActiveLoan(b.id);
     const avail = !loan;
-    if(filter==='available' && !avail) return false;
-    if(filter==='out'       &&  avail) return false;
+    if(currentFilter==='available' && !avail) return false;
+    if(currentFilter==='out'       &&  avail) return false;
+    if(currentCatFilter && b.cat!==currentCatFilter) return false;
     if(q && !b.title.toLowerCase().includes(q) && !b.author.toLowerCase().includes(q) && !b.cat.toLowerCase().includes(q)) return false;
     return true;
   });
+
   const totalOut   = loans.length;
   const totalAvail = books.length - totalOut;
   document.getElementById('stat-avail').textContent        = totalAvail;
   document.getElementById('stat-borrowed').textContent     = totalOut;
   document.getElementById('stat-total-browse').textContent = books.length;
   document.getElementById('header-avail-badge').textContent= totalAvail+' available';
+
   if(!visible.length){
     grid.innerHTML=`<div class="empty"><div class="empty-icon">📭</div><h3>No books found</h3><p>Try a different search or filter.</p></div>`;
     return;
   }
-  grid.innerHTML = visible.map(b=>{
-    const loan  = getActiveLoan(b.id);
-    const avail = !loan;
-    const over  = loan && isOverdue(loan);
+
+  const rows = visible.map(b=>{
+    const loan    = getActiveLoan(b.id);
+    const avail   = !loan;
+    const over    = loan && isOverdue(loan);
+    const pending = pendingCheckouts.has(Number(b.id));
     const statusClass = avail?'available': over?'overdue':'out';
-    const statusText  = avail?'Available':  over?'Overdue':'Out';
-    const dueRow = loan ? `<div class="due-info">Borrowed by ${loan.borrower} · Due ${fmtShort(loan.dueDate)}</div>` : '';
-    return `<div class="book-card${avail?'':' unavailable'}" onclick="${avail?`openCheckout(${b.id})`:''}">
-      <div class="book-spine" style="background:${b.color}">${initials(b.title)}</div>
-      <div class="book-body">
-        <div class="book-title">${b.title}</div>
-        <div class="book-author">${b.author}</div>
-        <div class="book-footer">
-          <span class="cat-tag">${b.cat}</span>
-          <span class="status-badge ${statusClass}">${statusText}</span>
-          ${dueRow}
-        </div>
-      </div>
+    const statusText  = pending?'Pending…': avail?'Available': over?'Overdue':'Out';
+    const rowClass    = 'book-row'+(pending?' pending-checkout': avail?'':' unavailable');
+    const click       = avail&&!pending ? `onclick="openCheckout(${b.id})"` : '';
+    const tip         = loan ? ` title="Borrowed by ${loan.borrower} · Due ${fmtShort(loan.dueDate)}"` : '';
+    return `<div class="${rowClass}" ${click}${tip}>
+      <div class="book-row-title">${b.title}</div>
+      <div class="book-row-author">${b.author}</div>
+      <div class="book-row-cat">${b.cat}</div>
+      <div><span class="status-badge ${statusClass}">${statusText}</span></div>
     </div>`;
   }).join('');
+
+  grid.innerHTML = `<div class="books-table">
+    <div class="books-thead">
+      <div class="col-title">Title</div>
+      <div class="col-author">Author</div>
+      <div class="col-cat">Category</div>
+      <div class="col-status">Status</div>
+    </div>
+    ${rows}
+  </div>`;
 }
 
 function setFilter(btn){
@@ -859,6 +897,39 @@ function setFilter(btn){
   document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
   btn.classList.add('active');
   renderBooks();
+}
+function setCatFilter(){
+  const sel = document.getElementById('cat-select');
+  currentCatFilter = sel.value;
+  renderBooks();
+}
+
+// ── Public Add Book ─────────────────────────────────────
+function openAddBook(){
+  document.getElementById('pub-add-title').value='';
+  document.getElementById('pub-add-author').value='';
+  document.getElementById('pub-add-category').value='';
+  document.getElementById('add-book-modal').classList.add('open');
+  setTimeout(()=>document.getElementById('pub-add-title').focus(),300);
+}
+function closeAddBook(){ document.getElementById('add-book-modal').classList.remove('open'); }
+async function publicAddBook(){
+  const title  = document.getElementById('pub-add-title').value.trim();
+  const author = document.getElementById('pub-add-author').value.trim();
+  const cat    = document.getElementById('pub-add-category').value.trim()||'General';
+  if(!title||!author){ showToast('Please enter title and author','error'); return; }
+  const color  = SPINE_COLORS[books.length % SPINE_COLORS.length];
+  const btn    = document.getElementById('pub-add-btn');
+  btn.disabled = true; btn.textContent = 'Adding…';
+  try {
+    const res = await apiPost({ action:'addBook', data:{ title, author, cat, color } });
+    if(!res.ok) throw new Error(res.error);
+    books.push(normaliseBook({ id:res.id, title, author, cat, color }));
+    closeAddBook();
+    renderBooks();
+    showToast(`✓ "${title}" added to the library`,'success');
+  } catch(e) { showToast('Error adding book — please try again','error'); }
+  btn.disabled = false; btn.textContent = 'Add to library';
 }
 
 // ── Checkout ───────────────────────────────────────────
@@ -895,40 +966,68 @@ async function confirmCheckout(){
   if(!email||!email.includes('@')){ showToast('Please enter a valid email','error'); return; }
   const b = books.find(x=>Number(x.id)===Number(selectedBookId));
   if(!b) return;
+
   const btn = document.getElementById('co-submit-btn');
-  btn.disabled = true; btn.textContent = 'Saving…';
-  const due = new Date(); due.setDate(due.getDate()+selectedDays);
+  btn.disabled = true; btn.textContent = 'Checking…';
+
+  // Lock the card in the UI immediately to block concurrent taps
+  pendingCheckouts.add(Number(selectedBookId));
+  renderBooks();
+
+  // Pre-check availability from server before writing
+  try {
+    const fresh = await apiGet({ action:'getLoans' });
+    loans = (fresh||[]).map(normaliseLoan);
+    if(getActiveLoan(selectedBookId)){
+      pendingCheckouts.delete(Number(selectedBookId));
+      renderBooks(); updateHeaderBadge(); checkOverdueBadge();
+      closeCheckout();
+      showToast('This book was just checked out by someone else — sorry!','error');
+      btn.disabled = false; btn.textContent = 'Confirm checkout';
+      return;
+    }
+  } catch(e){ /* network hiccup — proceed optimistically */ }
+
+  btn.textContent = 'Saving…';
+  const due  = new Date(); due.setDate(due.getDate()+selectedDays);
   const loan = { id:Date.now(), bookId:b.id, bookTitle:b.title, borrower:name, email:email, borrowDate:new Date().toISOString(), dueDate:due.toISOString() };
   try {
     const res = await apiPost({ action:'addLoan', data:loan });
     if(!res.ok) throw new Error(res.error||'Failed');
     loans.push(loan);
     closeCheckout();
-    renderBooks();
-    updateHeaderBadge();
-    checkOverdueBadge();
     showToast(`✓ "${b.title}" checked out to ${name}. Due ${fmtShort(due.toISOString())}`, 'success');
-    sendConfirmationEmail(loan, due.toISOString());
   } catch(e) {
     showToast('Error saving loan — please try again','error');
   }
+  pendingCheckouts.delete(Number(selectedBookId));
+  renderBooks(); updateHeaderBadge(); checkOverdueBadge();
   btn.disabled = false; btn.textContent = 'Confirm checkout';
 }
 
 // ── My Loans ───────────────────────────────────────────
 async function lookupLoans(){
-  const q  = document.getElementById('lookup-name').value.trim().toLowerCase();
-  const el = document.getElementById('loans-results');
-  if(!q){ el.innerHTML=''; return; }
+  const raw = document.getElementById('lookup-name').value.trim();
+  const el  = document.getElementById('loans-results');
+  if(!raw){ el.innerHTML=''; return; }
   // Refresh loans from server to ensure latest data
   try {
     const data = await apiGet({ action:'getLoans' });
     loans = (data||[]).map(normaliseLoan);
     updateHeaderBadge(); checkOverdueBadge(); renderBooks();
   } catch(e){}
-  const myLoans = loans.filter(l=>l.borrower.toLowerCase().includes(q));
+  // Prefer exact email match, then partial email, then partial name
+  let myLoans;
+  if(raw.includes('@')){
+    const q = raw.toLowerCase();
+    myLoans = loans.filter(l=>l.email.toLowerCase()===q);
+    if(!myLoans.length) myLoans = loans.filter(l=>l.email.toLowerCase().includes(q));
+  } else {
+    const q = raw.toLowerCase();
+    myLoans = loans.filter(l=>l.borrower.toLowerCase().includes(q));
+  }
   if(!myLoans.length){
-    el.innerHTML=`<div class="empty"><div class="empty-icon">🔍</div><h3>No active loans found</h3><p>No loans found for "${q}". Check the spelling of your name.</p></div>`;
+    el.innerHTML=`<div class="empty"><div class="empty-icon">🔍</div><h3>No active loans found</h3><p>No loans found for "${raw}". Try searching by email address for an exact match.</p></div>`;
     return;
   }
   const overdue = myLoans.filter(l=>isOverdue(l));
@@ -1047,15 +1146,8 @@ async function renderAdminPanel(){
   }).join('');
 
   // Settings
-  document.getElementById('setting-libname').value   = settings.libname  ||'';
-  document.getElementById('setting-location').value  = settings.location ||'';
-  document.getElementById('setting-ejs-pubkey').value   = settings.ejsPubkey  ||'';
-  document.getElementById('setting-ejs-service').value  = settings.ejsService ||'';
-  document.getElementById('setting-ejs-template').value = settings.ejsTemplate||'';
-  document.getElementById('setting-admin1').value       = settings.admin1 ||'';
-  document.getElementById('setting-admin2').value       = settings.admin2 ||'';
-  if(settings.ejsPubkey) showEmailStatus('Email notifications active ✓', true);
-  else showEmailStatus('Email credentials not yet configured', false);
+  document.getElementById('setting-libname').value  = settings.libname  ||'';
+  document.getElementById('setting-location').value = settings.location ||'';
 }
 
 async function adminReturn(loanId){
@@ -1105,20 +1197,13 @@ async function deleteBook(bookId){
 }
 
 async function saveSettings(){
-  settings.libname   = document.getElementById('setting-libname').value.trim()   || settings.libname;
-  settings.location  = document.getElementById('setting-location').value.trim()  || settings.location;
+  settings.libname  = document.getElementById('setting-libname').value.trim()  || settings.libname;
+  settings.location = document.getElementById('setting-location').value.trim() || settings.location;
   const newPin = document.getElementById('setting-pin').value.trim();
   if(newPin){ if(newPin.length===4&&/^\d+$/.test(newPin)){ settings.adminPin=newPin; } else { showToast('PIN must be exactly 4 digits','error'); return; } }
-  settings.ejsPubkey   = document.getElementById('setting-ejs-pubkey').value.trim();
-  settings.ejsService  = document.getElementById('setting-ejs-service').value.trim();
-  settings.ejsTemplate = document.getElementById('setting-ejs-template').value.trim();
-  settings.admin1      = document.getElementById('setting-admin1').value.trim();
-  settings.admin2      = document.getElementById('setting-admin2').value.trim();
   try {
     await apiPost({ action:'saveSettings', data:settings });
     applySettings();
-    if(settings.ejsPubkey){ emailjs.init(settings.ejsPubkey); showEmailStatus('Email notifications active ✓',true); }
-    else showEmailStatus('Email credentials not set — notifications inactive',false);
     showToast('Settings saved ✓','success');
   } catch(e) { showToast('Error saving settings','error'); }
 }
@@ -1220,6 +1305,7 @@ function confirmAction(){ closeConfirm(); if(pendingConfirmFn) pendingConfirmFn(
 
 document.getElementById('checkout-modal').addEventListener('click',function(e){ if(e.target===this) closeCheckout(); });
 document.getElementById('confirm-dialog').addEventListener('click',function(e){ if(e.target===this) closeConfirm(); });
+document.getElementById('add-book-modal').addEventListener('click',function(e){ if(e.target===this) closeAddBook(); });
 
 // ── Spin animation for loading ─────────────────────────
 const styleEl = document.createElement('style');
